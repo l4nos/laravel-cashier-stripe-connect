@@ -126,7 +126,7 @@ class StripeController extends Controller
 
 ## License
 
-Please refer to [LICENSE.md](https://github.com/ExpDev07/laravel-cashier-stripe-connect/blob/master/LICENSE.md) for this project's license.
+Please refer to [LICENSE.md](https://github.com/ExpDev07/laravel-cashier-stripe-connect/blob/main/LICENSE) for this project's license.
 
 ## Contributors
 
