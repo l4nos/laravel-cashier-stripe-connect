@@ -47,7 +47,7 @@ class CashierConnectServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../database/migrations' => $this->app->databasePath('migrations'),
-            ], 'cashier-migrations');
+            ], 'cashier-connect-migrations');
         }
     }
 
