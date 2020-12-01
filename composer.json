@@ -1,0 +1,20 @@
+{
+    "name": "expdev07/laravel-cashier-stripe-connect",
+    "description": "Adds Stripe Connect functionality to Laravel's main billing package, Cashier.",
+    "type": "library",
+    "require": {
+        "laravel/cashier": "^12.6"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ExpDev07",
+            "email": "mariusrich2@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ExpDev07\\CashierConnect\\": "src/"
+        }
+    }
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DependencyValidationManager">
+    <scope name="App" pattern="file:app//*||file:config//*||file:routes//*||file:app||file:config||file:routes||file:src//*||file:src" />
+    <scope name="Resources" pattern="file:resources//*||file:resources" />
+    <scope name="Database" pattern="file:database//*||file:database" />
+  </component>
+</project>
