@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ExpDev07\CashierConnect\Providers;
 
 
