@@ -26,5 +26,7 @@
                 "ExpDev07\\CashierConnect\\Providers\\CashierConnectServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
