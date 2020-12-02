@@ -14,7 +14,7 @@
     </a>
 </p>
 
-> Adds Stripe Connect functionality to Laravel's main billing package, Cashier.
+> 💲 Adds Stripe Connect functionality to Laravel's main billing package, Cashier. Simply works as a drop-in on top of Cashier, with no extra configuration.
 
 ## Installation
 
