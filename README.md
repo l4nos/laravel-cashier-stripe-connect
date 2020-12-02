@@ -16,7 +16,7 @@
 
 > Adds Stripe Connect functionality to Laravel's main billing package, Cashier.
 
-## Install
+## Installation
 
 1. Enable Stripe Connect in your [dashboard settings](https://dashboard.stripe.com/settings).
 2. Install Cashier: ``composer require laravel/cashier``
