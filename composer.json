@@ -4,7 +4,8 @@
 	"keywords": ["laravel", "stripe", "stripe-connect", "billing"],
     "type": "library",
     "require": {
-        "laravel/cashier": "^12.6"
+        "laravel/cashier": "^12.6",
+        "illuminate/support": "^8.17"
     },
     "license": "MIT",
     "authors": [
@@ -19,12 +20,9 @@
         }
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "12.x-dev"
-        },
         "laravel": {
             "providers": [
-                "ExpDev07\\CashierConnect\\Providers\\CashierConnectServiceProvider"
+                "ExpDev07\\CashierConnect\\CashierConnectServiceProvider"
             ]
         }
     },

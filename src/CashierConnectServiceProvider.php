@@ -1,6 +1,6 @@
 <?php
 
-namespace ExpDev07\CashierConnect\Providers;
+namespace ExpDev07\CashierConnect;
 
 
 use Illuminate\Support\ServiceProvider;
