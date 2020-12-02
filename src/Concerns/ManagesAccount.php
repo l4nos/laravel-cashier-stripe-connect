@@ -1,7 +1,7 @@
 <?php
 
-namespace ExpDev07\CashierConnect\Concerns;
 
+namespace ExpDev07\CashierConnect\Concerns;
 
 use ExpDev07\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use ExpDev07\CashierConnect\Exceptions\AccountNotFoundException;
@@ -135,7 +135,7 @@ trait ManagesAccount
      * @param string $type
      * @param array $options
      * @return Account
-     * @throws AccountAlreadyExistsException|ApiErrorException
+     * @throws AccountNotFoundException|AccountAlreadyExistsException|ApiErrorException
      */
     public function createOrGetStripeAccount(string $type = 'express', array $options = []): Account
     {
@@ -151,7 +151,7 @@ trait ManagesAccount
      * @param string $type
      * @param array $options
      * @return Account
-     * @throws AccountAlreadyExistsException|ApiErrorException
+     * @throws AccountNotFoundException|AccountAlreadyExistsException|ApiErrorException
      */
     public function deleteAndCreateStripeAccount(string $type = 'express', array $options = []): Account
     {
@@ -206,7 +206,7 @@ trait ManagesAccount
      * @return string
      * @throws AccountNotFoundException|ApiErrorException
      */
-    public function accountLinkUrl($type, $options): string
+    public function accountLinkUrl(string $type, array $options = []): string
     {
         $this->assertAccountExists();
 
@@ -218,16 +218,48 @@ trait ManagesAccount
     }
 
     /**
-     * Generate a redirect response to the account link URL for Stripe.
+     * Generates a redirect response to the account link URL for Stripe.
      *
      * @param $type
      * @param $options
      * @return RedirectResponse
      * @throws AccountNotFoundException|ApiErrorException
      */
-    public function redirectToAccountLink($type, $options): RedirectResponse
+    public function redirectToAccountLink(string $type, array $options = []): RedirectResponse
     {
         return new RedirectResponse($this->accountLinkUrl($type, $options));
+    }
+
+    /**
+     * Gets an URL for Stripe account onboarding.
+     *
+     * @param $return_url
+     * @param $refresh_url
+     * @param $options
+     * @return string
+     * @throws AccountNotFoundException|ApiErrorException
+     */
+    public function accountOnboardingUrl(string $return_url, string $refresh_url, array $options = []): string
+    {
+        $options = array_merge([
+            'return_url' => $return_url,
+            'refresh_url' => $refresh_url,
+        ], $options);
+        return $this->accountLinkUrl('account_onboarding', $options);
+    }
+
+    /**
+     * Generates a redirect response to the account onboarding URL for Stripe.
+     *
+     * @param $return_url
+     * @param $refresh_url
+     * @param $options
+     * @return RedirectResponse
+     * @throws AccountNotFoundException|ApiErrorException
+     */
+    public function redirectToAccountOnboarding(string $return_url, string $refresh_url, array $options= [])
+    {
+        return new RedirectResponse($this->accountOnboardingUrl($return_url, $refresh_url, $options));
     }
 
     /**
@@ -247,7 +279,7 @@ trait ManagesAccount
     }
 
     /**
-     * Generate a redirect response to the account dashboard login for Stripe.
+     * Generates a redirect response to the account dashboard login for Stripe.
      *
      * @return RedirectResponse
      * @throws AccountNotFoundException|ApiErrorException

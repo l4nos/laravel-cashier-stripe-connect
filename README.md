@@ -120,11 +120,11 @@ class StripeController extends Controller
             ]
         ]);
 
-        // Redirect to account onboarding otherwise.
-        return $user->redirectToAccountLink('account_onboarding', [
-            'return_url' => URL::to('/api/stripe/return?api_token=' . $user->api_token),
-            'refresh_url' => URL::to('/api/stripe/refresh?api_token=' . $user->api_token),
-        ]);
+        // Redirect to Stripe account onboarding otherwise.
+        return $user->redirectToAccountOnboarding(
+            URL::to('/api/stripe/return?api_token=' . $user->api_token), // return url
+            URL::to('/api/stripe/refresh?api_token=' . $user->api_token) // refresh url
+        );
     }
 
 }
