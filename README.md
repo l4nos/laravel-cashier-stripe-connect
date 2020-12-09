@@ -128,11 +128,9 @@ class StripeController extends Controller
             ]
         ]);
 
-        // Redirect to Stripe account onboarding otherwise.
+        // Redirect to Stripe account onboarding, with return and refresh url, otherwise.
         return $user->redirectToAccountOnboarding(
-	    // return url
             URL::to('/api/stripe/return?api_token=' . $user->api_token),
-	    // refresh url
             URL::to('/api/stripe/refresh?api_token=' . $user->api_token)
         );
     }
