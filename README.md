@@ -2,7 +2,7 @@
 	laravel-cashier-stripe-connect
 </h1>
  
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; justify-content: center;" align="center">
 	<a style="display: inline;" href="https://packagist.org/packages/expdev07/laravel-cashier-stripe-connect"><img src="https://img.shields.io/packagist/dt/expdev07/laravel-cashier-stripe-connect" alt="Total Downloads"></a>
 	<a style="display: inline;" href="https://packagist.org/packages/expdev07/laravel-cashier-stripe-connect"><img src="https://img.shields.io/packagist/v/expdev07/laravel-cashier-stripe-connect" alt="Latest Stable Version"></a>
 	<a style="display: inline;" href="https://packagist.org/packages/expdev07/laravel-cashier-stripe-connect"><img src="https://img.shields.io/packagist/l/expdev07/laravel-cashier-stripe-connect" alt="License"></a>
