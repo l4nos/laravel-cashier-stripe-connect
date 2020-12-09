@@ -116,15 +116,15 @@ class StripeController extends Controller
         }
 
         // Delete account if already exists and create new express account with 
-	// weekly payouts.
+        // weekly payouts.
         $user->deleteAndCreateStripeAccount('express', [
             'settings' => [
                 'payouts' => [ 
-		    'schedule' => [ 
-		        'interval' => 'weekly', 
-			'weekly_anchor' => 'friday',
-		    ]
-		]
+                    'schedule' => [ 
+                        'interval' => 'weekly', 
+                        'weekly_anchor' => 'friday',
+                    ]
+                ]
             ]
         ]);
 
