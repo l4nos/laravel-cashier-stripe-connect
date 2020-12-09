@@ -19,7 +19,7 @@
 ## Installation
 
 1. Enable Stripe Connect in your [dashboard settings](https://dashboard.stripe.com/settings).
-2. Install Cashier: ``composer require laravel/cashier``
+2. Install Cashier: ``composer require laravel/cashier``.
 3. Install package: ``composer require expdev07/laravel-cashier-stripe-connect``.
 4. Run migrations: ``php artisan migrate``.
 5. Configure Stripe keys for Cashier: [Cashier Docs](https://laravel.com/docs/8.x/billing#api-keys).
