@@ -101,8 +101,9 @@ class StripeController extends Controller
     }
 
     /**
-     * Handles the redirection logic of Stripe onboarding for the given user. Will create account and redirect user to
-     * onboarding process or redirect to account dashboard if they have already completed the process.
+     * Handles the redirection logic of Stripe onboarding for the given user. Will 
+     * create account and redirect user to onboarding process or redirect to account 
+     * dashboard if they have already completed the process.
      *
      * @param User $user
      * @return RedirectResponse
@@ -114,17 +115,25 @@ class StripeController extends Controller
             return $user->redirectToAccountDashboard();
         }
 
-        // Delete account if already exists and create new express account with weekly payouts.
+        // Delete account if already exists and create new express account with 
+	// weekly payouts.
         $user->deleteAndCreateStripeAccount('express', [
             'settings' => [
-                'payouts' => [ 'schedule' => [ 'interval' => 'weekly', 'weekly_anchor' => 'friday' ] ]
+                'payouts' => [ 
+		    'schedule' => [ 
+		        'interval' => 'weekly', 
+			'weekly_anchor' => 'friday',
+		    ]
+		]
             ]
         ]);
 
         // Redirect to Stripe account onboarding otherwise.
         return $user->redirectToAccountOnboarding(
-            URL::to('/api/stripe/return?api_token=' . $user->api_token), // return url
-            URL::to('/api/stripe/refresh?api_token=' . $user->api_token) // refresh url
+	    // return url
+            URL::to('/api/stripe/return?api_token=' . $user->api_token),
+	    // refresh url
+            URL::to('/api/stripe/refresh?api_token=' . $user->api_token)
         );
     }
 
