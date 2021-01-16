@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Laravel\Cashier\Cashier;
 use Stripe\Account;
 use Stripe\AccountLink;
+use Stripe\Balance;
 use Stripe\Exception\ApiErrorException;
 
 /**
@@ -287,6 +288,23 @@ trait ManagesAccount
     public function redirectToAccountDashboard(): RedirectResponse
     {
         return new RedirectResponse($this->accountDashboardUrl());
+    }
+    
+    /**
+     * Retreive a Stripe Connect account's balance.
+     *
+     * @return Balance
+     * @throws AccountNotFoundException|ApiErrorException
+     */
+    public function retrieveAccountBalace(): Balance
+    {
+        $this->assertAccountExists();
+
+        $options = array_merge([
+            'stripe_account' => $this->stripeAccountId(),
+        ], $this->stripeAccountOptions());
+
+        return Balance::retrieve($options);
     }
 
     /**
