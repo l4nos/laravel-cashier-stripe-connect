@@ -296,7 +296,7 @@ trait ManagesAccount
      * @return Balance
      * @throws AccountNotFoundException|ApiErrorException
      */
-    public function retrieveAccountBalace(): Balance
+    public function retrieveAccountBalance(): Balance
     {
         $this->assertAccountExists();
 
