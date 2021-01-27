@@ -266,16 +266,17 @@ trait ManagesAccount
     /**
      * Gets the Stripe account dashboard login URL.
      *
+     * @param $options
      * @return string
      * @throws AccountNotFoundException|ApiErrorException
      */
-    public function accountDashboardUrl(): ?string
+    public function accountDashboardUrl(array $options = []): ?string
     {
         $this->assertAccountExists();
 
         // Can only create login link if details has been submitted.
         return $this->hasSubmittedAccountDetails()
-            ? Account::createLoginLink($this->stripeAccountId(), [], $this->stripeAccountOptions())->url
+            ? Account::createLoginLink($this->stripeAccountId(), $options, $this->stripeAccountOptions())->url
             : null;
     }
 
