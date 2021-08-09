@@ -2,21 +2,21 @@
 
 namespace ExpDev07\CashierConnect\Concerns;
 
-trait ManageVendor {
+trait ManagesVendor {
     /**
-     * Bump the vendor's balance
+     * Bump a connected account's balance
      * 
-     * @param $amount, $currency, $connected_account_stripe_id
+     * @param $amount, $currency, $connectedAccountStripeId
      * 
      * @return bool
      */
-    public function bumpConnectAccBalance($amount, $currency, $connected_account_stripe_id):bool
+    public function bumpConnectedAccBalance($amount, $currency, $connectedAccountStripeId): bool
     {
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         \Stripe\Transfer::create([
             'amount' => $amount,
             'currency' => $currency,
-            'destination' => $connected_account_stripe_id,
+            'destination' => $connectedAccountStripeId,
         ]);
         return true;
     }
@@ -24,17 +24,17 @@ trait ManageVendor {
     /**
      * Pay a connected account
      * 
-     * @param $amount, $currency, $connected_account_stripe_id
+     * @param $amount, $currency, $connectedAccountStripeId
      * 
      * @return bool
      */
-    public function payConnectedAcc($amount, $currency, $connected_account_stripe_id):bool
+    public function payConnectedAcc($amount, $currency, $connectedAccountStripeId): bool
     {
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         \Stripe\Payout::create([
             'amount' => $amount,
             'currency' => $currency,
-        ], ['stripe_account' => $connected_account_stripe_id]);
+        ], ['stripe_account' => $connectedAccountStripeId]);
         return true;
     }
 }

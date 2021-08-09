@@ -5,7 +5,7 @@ namespace ExpDev07\CashierConnect;
 
 
 use ExpDev07\CashierConnect\Concerns\ManagesAccount;
-use ExpDev07\CashierConnect\Concerns\ManageVendor;
+use ExpDev07\CashierConnect\Concerns\ManagesVendor;
 
 /**
  * Added to models for Stripe Connect functionality.
@@ -14,5 +14,5 @@ use ExpDev07\CashierConnect\Concerns\ManageVendor;
  */
 trait Billable
 {
-    use ManagesAccount, ManageVendor;
+    use ManagesAccount, ManagesVendor;
 }
