@@ -138,6 +138,21 @@ class StripeController extends Controller
 }
 ```
 
+## Deal with a connected account (Vendor or a Seller)
+### Bump the balance of a connected account
+```
+// Get a vendor
+$vendor = Vendor::find(1);
+$amount = 100; // $1
+$currency = 'usd';
+$connected_account_stripe_id = 'acc_...';
+
+$vendor->bumpConnectAccBalance($amount, $currency, $connected_account_stripe_id); // returns boolean
+```
+### Pay a connected account
+```
+$vendor->payConnectedAcc($amount, $currency, $connected_account_stripe_id);
+```
 
 
 ## License
