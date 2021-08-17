@@ -32,16 +32,18 @@ The library builds on the official [Cashier](https://laravel.com/docs/8.x/billin
 
 ### Setup model
 
-Add the ``Billable`` traits to your model. You can use them individually or together. You can also create your own ``Billable`` trait and put them together there.
+Add the ``Billable`` traits to your model. You can use them individually or together. You can also create your own ``Billable`` trait and put them together there. In 
+addition, the model should also implement the ``StripeAccount`` interface.
 
 ```php
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use ExpDev07\CashierConnect\Contracts\StripeAccount;
 use Laravel\Cashier\Billable as CashierBillable;
 use ExpDev07\CashierConnect\Billable as ConnectBillable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements StripeAccount
 {
     use CashierBillable;
     use ConnectBillable;
@@ -138,22 +140,19 @@ class StripeController extends Controller
 }
 ```
 
-## Deal with connected accounts (Vendors or Sellers)
-### Bump a connected account's balance
-```
-// Get a vendor
-$vendor = Vendor::find(1);
-$amount = 100; // 1 usd
-$currency = 'usd';
-$connectedAccountStripeId = 'acc_...';
+## Example
 
-$vendor->bumpConnectedAccountBalance($amount, $currency, $connectedAccountStripeId); // returns boolean
-```
-### Pay a connected account
-```
-$vendor->payConnectedAccount($amount, $currency, $connectedAccountStripeId);
-```
+```php
+// Get user. This user has added the Billable trait and implements StripeAccount.
+$user = User::query()->find(1);
 
+// Transfer 10 USD to the user.
+$user->transferToStripeAccount(1000);
+
+// Payout 5 dollars to the user's bank account, which will arrive in 1 week.
+$user->payoutStripeAccount(500, Date::now()->addWeek());
+
+```
 
 ## License
 
