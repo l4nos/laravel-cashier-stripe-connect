@@ -138,6 +138,21 @@ class StripeController extends Controller
 }
 ```
 
+## Deal with connected accounts (Vendors or Sellers)
+### Bump a connected account's balance
+```
+// Get a vendor
+$vendor = Vendor::find(1);
+$amount = 100; // 1 usd
+$currency = 'usd';
+$connectedAccountStripeId = 'acc_...';
+
+$vendor->bumpConnectedAccountBalance($amount, $currency, $connectedAccountStripeId); // returns boolean
+```
+### Pay a connected account
+```
+$vendor->payConnectedAccount($amount, $currency, $connectedAccountStripeId);
+```
 
 
 ## License
@@ -148,6 +163,7 @@ Please refer to [LICENSE.md](https://github.com/ExpDev07/laravel-cashier-stripe-
 
 This list only contains some of the most notable contributors. For the full list, refer to [GitHub's contributors graph](https://github.com/ExpDev07/laravel-cashier-stripe-connect/graphs/contributors).
 * ExpDev07 (Marius) - creator and maintainer.
+* Haytam Bakouane [(hbakouane)](https://github.com/hbakouane) - contributor.
 
 ## Thanks to
 

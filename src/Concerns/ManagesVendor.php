@@ -2,11 +2,6 @@
 
 namespace ExpDev07\CashierConnect\Concerns;
 
-/**
- * Manages Stripe connected accounts for the model.
- *
- * @package ExpDev07\CashierConnect\Concerns
- */
 trait ManagesVendor {
     /**
      * Bump a connected account's balance
@@ -33,7 +28,7 @@ trait ManagesVendor {
      * 
      * @return bool
      */
-    public function payConnectedAccount($amount, $currency, $connectedAccountStripeId) :bool
+    public function payConnectedAccount($amount, $currency, $connectedAccountStripeId): bool
     {
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         \Stripe\Payout::create([
