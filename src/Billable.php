@@ -40,7 +40,7 @@ trait Billable
             $options['stripe_account'] = $this->stripeAccountId();
         }
 
-        return array_merge(Cashier::stripeOptions($options));
+        return array_merge(Cashier::stripe($options));
     }
 
 }
