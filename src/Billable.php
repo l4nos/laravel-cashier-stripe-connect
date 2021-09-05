@@ -30,13 +30,14 @@ trait Billable
      * The default Stripe API options for the current Billable model.
      *
      * @param array $options
+     * @param bool $sendAsAccount
      * @return array
      */
-    public function stripeAccountOptions(array $options = []): array
+    public function stripeAccountOptions(array $options = [], bool $sendAsAccount = false): array
     {
         // Include Stripe Account id if present. This is so we can make requests on the behalf of the account.
         // Read more: https://stripe.com/docs/api/connected_accounts?lang=php.
-        if ($this->hasStripeAccountId()) {
+        if ($sendAsAccount && $this->hasStripeAccountId()) {
             $options['stripe_account'] = $this->stripeAccountId();
         }
 
