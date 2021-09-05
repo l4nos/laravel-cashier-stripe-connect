@@ -27,7 +27,7 @@ trait ManagesPayout
      * @return Payout
      * @throws AccountNotFoundException|ApiErrorException
      */
-    public function payoutStripeAccount(int $amount,  Date $arrival, string $currency = 'USD', $options = []): Payout
+    public function payoutStripeAccount(int $amount, Date $arrival, string $currency = 'USD', array $options = []): Payout
     {
         $this->assertAccountExists();
 
@@ -38,7 +38,7 @@ trait ManagesPayout
             'arrival_date' => $arrival->timestamp,
         ]);
 
-        return Payout::create($options, $this->stripeAccountOptions());
+        return Payout::create($options, $this->stripeAccountOptions([], true));
     }
 
 }
