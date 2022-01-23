@@ -50,7 +50,7 @@ trait ManagesTransfer
      * @return TransferReversal
      * @throws AccountNotFoundException|ApiErrorException
      */
-    public function reverseTransferFromStripeAccount(Transfer $transfer, $refundFee = false, ?int $amount, array $options = []): TransferReversal
+    public function reverseTransferFromStripeAccount(Transfer $transfer, $refundFee = false, ?int $amount = null, array $options = []): TransferReversal
     {
         $this->assertAccountExists();
 
