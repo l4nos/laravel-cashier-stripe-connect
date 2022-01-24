@@ -42,7 +42,7 @@ trait Billable
         }
         
         // Workaround for Cashier 12.x 
-        if (version_compare(Cashier::VERSION, '12.15.0', '<=') {
+        if (version_compare(Cashier::VERSION, '12.15.0', '<=')) {
             return array_merge(Cashier::stripeOptions($options));
         }
 
