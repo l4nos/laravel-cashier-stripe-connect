@@ -5,13 +5,25 @@
     "type": "library",
     "require": {
         "laravel/cashier": "^12.6|^13.4",
-        "illuminate/support": "^8.17|^9.0"
+        "illuminate/console": "^8.37|^9.0",
+        "illuminate/contracts": "^8.37|^9.0",
+        "illuminate/database": "^8.37|^9.0",
+        "illuminate/http": "^8.37|^9.0",
+        "illuminate/log": "^8.37|^9.0",
+        "illuminate/notifications": "^8.37|^9.0",
+        "illuminate/routing": "^8.37|^9.0",
+        "illuminate/support": "^8.37|^9.0",
+        "illuminate/view": "^8.37|^9.0"
     },
     "license": "MIT",
     "authors": [
         {
             "name": "ExpDev07",
             "email": "mariusrich2@gmail.com"
+        },
+        {
+            "name": "Robert Lane",
+            "email": "rob@updev.agency"
         }
     ],
     "autoload": {
