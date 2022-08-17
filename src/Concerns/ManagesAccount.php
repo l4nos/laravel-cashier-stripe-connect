@@ -5,6 +5,7 @@ namespace ExpDev07\CashierConnect\Concerns;
 
 use ExpDev07\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use ExpDev07\CashierConnect\Exceptions\AccountNotFoundException;
+use ExpDev07\CashierConnect\Models\ConnectMapping;
 use Stripe\Account;
 use Stripe\Exception\ApiErrorException;
 
@@ -16,6 +17,16 @@ use Stripe\Exception\ApiErrorException;
 trait ManagesAccount
 {
 
+
+    /**
+     * @return mixed
+     */
+    public function stripeAccountMapping(){
+
+        return $this->belongsTo(ConnectMapping::class, 'id', 'model_id')->where('model', '=', get_class($this));
+
+    }
+
     /**
      * Retrieve the Stripe account ID.
      *
@@ -23,7 +34,7 @@ trait ManagesAccount
      */
     public function stripeAccountId(): ?string
     {
-        return $this->stripe_account_id;
+        return $this->stripeAccountMapping()->first()->stripe_account_id;
     }
 
     /**
@@ -31,9 +42,9 @@ trait ManagesAccount
      *
      * @return bool
      */
-    public function hasStripeAccountId(): bool
+    public function hasStripeAccount(): bool
     {
-        return ! is_null($this->stripeAccountId());
+        return ! is_null($this->stripeAccountMapping());
     }
 
     /**
@@ -47,6 +58,14 @@ trait ManagesAccount
     }
 
     /**
+     * @return int
+     */
+    public function getModelID(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * Determine if the entity has a Stripe account ID and throw an exception if not.
      *
      * @return void
@@ -54,7 +73,7 @@ trait ManagesAccount
      */
     protected function assertAccountExists(): void
     {
-        if (! $this->hasStripeAccountId()) {
+        if (! $this->hasStripeAccount()) {
             throw new AccountNotFoundException('Stripe account does not exist.');
         }
     }
@@ -107,7 +126,7 @@ trait ManagesAccount
     public function createAsStripeAccount(string $type = 'express', array $options = []): Account
     {
         // Check if model already has a connected Stripe account.
-        if ($this->hasStripeAccountId()) {
+        if ($this->hasStripeAccount()) {
             throw new AccountAlreadyExistsException('Stripe account already exists.');
         }
 
@@ -121,7 +140,12 @@ trait ManagesAccount
         $account = Account::create($options, $this->stripeAccountOptions());
 
         // Save the id.
-        $this->stripe_account_id = $account->id;
+        $this->stripeAccountMapping()->create([
+            "stripe_account_id" => $account->id,
+            "model" => get_class($this),
+            "model_id" => $this->getModelID()
+        ]);
+
         $this->save();
 
         return $account;
@@ -138,7 +162,7 @@ trait ManagesAccount
     public function createOrGetStripeAccount(string $type = 'express', array $options = []): Account
     {
         // Return Stripe account if exists, otherwise create new.
-        return $this->hasStripeAccountId()
+        return $this->hasStripeAccount()
             ? $this->asStripeAccount()
             : $this->createAsStripeAccount($type, $options);
     }
@@ -158,8 +182,7 @@ trait ManagesAccount
         $account->delete();
 
         // Wipe account id reference from model.
-        $this->stripe_account_id = null;
-        $this->save();
+        $this->stripeAccountMapping()->delete();
 
         return $account;
     }
@@ -175,7 +198,7 @@ trait ManagesAccount
     public function deleteAndCreateStripeAccount(string $type = 'express', array $options = []): Account
     {
         // Delete account if it already exists.
-        if ($this->hasStripeAccountId()) {
+        if ($this->hasStripeAccount()) {
             $this->deleteStripeAccount();
         }
 

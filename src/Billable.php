@@ -37,7 +37,7 @@ trait Billable
     {
         // Include Stripe Account id if present. This is so we can make requests on the behalf of the account.
         // Read more: https://stripe.com/docs/api/connected_accounts?lang=php.
-        if ($sendAsAccount && $this->hasStripeAccountId()) {
+        if ($sendAsAccount && $this->hasStripeAccount()) {
             $options['stripe_account'] = $this->stripeAccountId();
         }
         

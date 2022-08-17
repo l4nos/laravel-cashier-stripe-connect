@@ -14,6 +14,8 @@
     </a>
 </p>
 
+> Originally this package only supported adding ConnectBillable to the User Model. This has now been changed so you can add it to any model and even transfer funds between different models.
+
 > 💲 Adds Stripe Connect functionality to Laravel's main billing package, Cashier. Simply works as a drop-in on top of Cashier, with no extra configuration.
 
 ## Installation

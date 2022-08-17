@@ -17,8 +17,11 @@ class CreateAccountColumns extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('stripe_account_id')->nullable()->index();
+        Schema::create('stripe_connect_mappings', function (Blueprint $table) {
+            $table->string('model');
+            $table->string('model_id')->nullable()->index();;
+            $table->uuid('model_uuid')->nullable()->index();
+            $table->string('stripe_account_id')->index();
         });
     }
 
@@ -29,10 +32,6 @@ class CreateAccountColumns extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn([
-                'stripe_account_id',
-            ]);
-        });
+        Schema::dropIfExists('stripe_connect_mappings');
     }
 }
