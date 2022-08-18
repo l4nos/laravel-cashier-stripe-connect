@@ -29,7 +29,7 @@
 
 **Note:** the package will not work as intended if you do not install [Laravel's official Cashier package](https://laravel.com/docs/8.x/billing) first.
 
-## Installation For Multi Tenancy Applications (Using Tenancy For Laravel (V3))
+## Installation For Multi Tenancy Applications (Using Tenancy For Laravel (V3) )
 
 1. Enable Stripe Connect in your [dashboard settings](https://dashboard.stripe.com/settings).
 2. Install Cashier: ``composer require laravel/cashier``.
@@ -172,6 +172,14 @@ Some people prefer to use Ordered UUID's, this has become more common since Lara
 
 ```php
 public $incrementing = false;
+```
+
+## Custom Primary Key Usage
+
+This package will correctly recognise your custom primary key, as long as you use the following correctly.
+
+```php
+protected $primaryKey = 'your_primary_key';
 ```
 
 ## License

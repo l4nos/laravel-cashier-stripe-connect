@@ -20,15 +20,9 @@ trait ManagesAccount
     /**
      * @return mixed
      */
-    public function stripeAccountMapping(){
-
-        if($this->incrementing){
-            return $this->belongsTo(ConnectMapping::class, 'id', 'model_id')->where('model', '=', get_class($this));
-        }else{
-            // IF NOT INCREMENTING, IT'S LIKELY TO BE UUID
-            return $this->belongsTo(ConnectMapping::class, 'id', 'model_uuid')->where('model', '=', get_class($this));
-        }
-
+    public function stripeAccountMapping()
+    {
+        return $this->belongsTo(ConnectMapping::class, $this->primaryKey, $this->getLocalIDField(0))->where('model', '=', get_class($this));
     }
 
     /**
@@ -48,7 +42,7 @@ trait ManagesAccount
      */
     public function hasStripeAccount(): bool
     {
-        return ! is_null($this->stripeAccountMapping());
+        return ($this->stripeAccountMapping()->exists());
     }
 
     /**
@@ -66,7 +60,7 @@ trait ManagesAccount
      */
     public function getModelID(): int
     {
-        return $this->id;
+        return $this->{$this->primaryKey};
     }
 
     /**
@@ -127,7 +121,7 @@ trait ManagesAccount
      * @return Account
      * @throws AccountAlreadyExistsException|ApiErrorException
      */
-    public function createAsStripeAccount(string $type = 'express', array $options = []): Account
+    public function createAsStripeAccount(string $type = 'standard', array $options = []): Account
     {
         // Check if model already has a connected Stripe account.
         if ($this->hasStripeAccount()) {
@@ -147,6 +141,7 @@ trait ManagesAccount
         $this->stripeAccountMapping()->create([
             "stripe_account_id" => $account->id,
             "model" => get_class($this),
+            $this->getLocalIDField() => $this->{$this->primaryKey}
         ]);
 
         $this->save();
@@ -221,6 +216,16 @@ trait ManagesAccount
         $this->assertAccountExists();
 
         return Account::update($this->stripeAccountId(), $options, $this->stripeAccountOptions());
+    }
+
+    private function getLocalIDField(){
+
+        if($this->incrementing){
+            return 'model_id';
+        }else{
+            return 'id';
+        }
+
     }
 
 }

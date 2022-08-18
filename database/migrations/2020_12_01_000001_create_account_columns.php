@@ -19,7 +19,7 @@ class CreateAccountColumns extends Migration
     {
         Schema::create('stripe_connect_mappings', function (Blueprint $table) {
             $table->string('model');
-            $table->string('model_id')->nullable()->index();;
+            $table->unsignedBigInteger('model_id')->nullable()->index();;
             $table->uuid('model_uuid')->nullable()->index();
             $table->string('stripe_account_id')->index();
         });

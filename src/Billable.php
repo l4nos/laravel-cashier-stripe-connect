@@ -7,8 +7,8 @@ namespace Lanos\CashierConnect;
 use Lanos\CashierConnect\Concerns\ManagesAccount;
 use Lanos\CashierConnect\Concerns\ManagesAccountLink;
 use Lanos\CashierConnect\Concerns\ManagesBalance;
-use Lanos\CashierConnect\Concerns\ManagesPayout;
 use Lanos\CashierConnect\Concerns\ManagesPerson;
+use Lanos\CashierConnect\Concerns\ManagesPayout;
 use Lanos\CashierConnect\Concerns\ManagesTransfer;
 use Laravel\Cashier\Cashier;
 
