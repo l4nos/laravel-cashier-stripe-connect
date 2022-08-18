@@ -1,21 +1,21 @@
 <?php
 
 
-namespace ExpDev07\CashierConnect;
+namespace Lanos\CashierConnect;
 
 
-use ExpDev07\CashierConnect\Concerns\ManagesAccount;
-use ExpDev07\CashierConnect\Concerns\ManagesAccountLink;
-use ExpDev07\CashierConnect\Concerns\ManagesBalance;
-use ExpDev07\CashierConnect\Concerns\ManagesPayout;
-use ExpDev07\CashierConnect\Concerns\ManagesPerson;
-use ExpDev07\CashierConnect\Concerns\ManagesTransfer;
+use Lanos\CashierConnect\Concerns\ManagesAccount;
+use Lanos\CashierConnect\Concerns\ManagesAccountLink;
+use Lanos\CashierConnect\Concerns\ManagesBalance;
+use Lanos\CashierConnect\Concerns\ManagesPayout;
+use Lanos\CashierConnect\Concerns\ManagesPerson;
+use Lanos\CashierConnect\Concerns\ManagesTransfer;
 use Laravel\Cashier\Cashier;
 
 /**
  * Added to models for Stripe Connect functionality.
  *
- * @package ExpDev07\CashierConnect
+ * @package Lanos\CashierConnect
  */
 trait Billable
 {

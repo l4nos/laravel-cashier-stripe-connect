@@ -1,6 +1,6 @@
 <?php
 
-namespace ExpDev07\CashierConnect;
+namespace Lanos\CashierConnect;
 
 
 use Illuminate\Support\ServiceProvider;
@@ -9,7 +9,7 @@ use Laravel\Cashier\Cashier;
 /**
  * Service provider for the package.
  *
- * @package ExpDev07\CashierConnect\Providers
+ * @package Lanos\CashierConnect\Providers
  */
 class CashierConnectServiceProvider extends ServiceProvider
 {

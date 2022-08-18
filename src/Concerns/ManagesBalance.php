@@ -1,16 +1,16 @@
 <?php
 
 
-namespace ExpDev07\CashierConnect\Concerns;
+namespace Lanos\CashierConnect\Concerns;
 
-use ExpDev07\CashierConnect\Exceptions\AccountNotFoundException;
+use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Stripe\Balance;
 use Stripe\Exception\ApiErrorException;
 
 /**
  * Manages balance for the Stripe connected account.
  *
- * @package ExpDev07\CashierConnect\Concerns
+ * @package Lanos\CashierConnect\Concerns
  */
 trait ManagesBalance
 {

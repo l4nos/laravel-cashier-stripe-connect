@@ -14,19 +14,29 @@
     </a>
 </p>
 
-> Originally this package only supported adding ConnectBillable to the User Model. This has now been changed so you can add it to any model and even transfer funds between different models.
+> Originally this package only supported adding ConnectBillable to the User Model. This has now been changed so you can add it to any model and even transfer funds between different models. This packagr also now supports UUID primary key's on billable models.
 
 > 💲 Adds Stripe Connect functionality to Laravel's main billing package, Cashier. Simply works as a drop-in on top of Cashier, with no extra configuration.
 
-## Installation
+## Installation for Single Tenancy Applications
 
 1. Enable Stripe Connect in your [dashboard settings](https://dashboard.stripe.com/settings).
 2. Install Cashier: ``composer require laravel/cashier``.
 3. Install package: ``composer require expdev07/laravel-cashier-stripe-connect``.
-4. Run migrations: ``php artisan migrate``.
-5. Configure Stripe keys for Cashier: [Cashier Docs](https://laravel.com/docs/9.x/billing#api-keys).
+4. Publish migrations ``php artisan vendor:publish --tag=cashier-connect-migrations``.
+5. Run migrations: ``php artisan migrate``.
+6. Configure Stripe keys for Cashier: [Cashier Docs](https://laravel.com/docs/9.x/billing#api-keys).
 
 **Note:** the package will not work as intended if you do not install [Laravel's official Cashier package](https://laravel.com/docs/8.x/billing) first.
+
+## Installation For Multi Tenancy Applications (Using Tenancy For Laravel (V3))
+
+1. Enable Stripe Connect in your [dashboard settings](https://dashboard.stripe.com/settings).
+2. Install Cashier: ``composer require laravel/cashier``.
+3. Install package: ``composer require expdev07/laravel-cashier-stripe-connect``.
+4. Publish tenant migrations ``php artisan vendor:publish --tag=cashier-connect-tenancy-migrations``.
+5. Run tenant migrations : ``php artisan tenants:migrate``
+6. Configure Stripe keys for Cashier: [Cashier Docs](https://laravel.com/docs/9.x/billing#api-keys).
 
 ## Use
 
@@ -41,9 +51,9 @@ addition, the model should also implement the ``StripeAccount`` interface.
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use ExpDev07\CashierConnect\Contracts\StripeAccount;
+use Lanos\CashierConnect\Contracts\StripeAccount;
 use Laravel\Cashier\Billable as CashierBillable;
-use ExpDev07\CashierConnect\Billable as ConnectBillable;
+use Lanos\CashierConnect\Billable as ConnectBillable;
 
 class User extends Authenticatable implements StripeAccount
 {
@@ -156,15 +166,24 @@ $user->payoutStripeAccount(500, Date::now()->addWeek());
 
 ```
 
+## UUID Usage
+
+Some people prefer to use Ordered UUID's, this has become more common since Laravel 9. The package will automatically detect if you are using a non integer primary key on your model, as long as you have the following property set on your model it should work fine.
+
+```php
+public $incrementing = false;
+```
+
 ## License
 
-Please refer to [LICENSE.md](https://github.com/ExpDev07/laravel-cashier-stripe-connect/blob/main/LICENSE) for this project's license.
+Please refer to [LICENSE.md](https://github.com/Lanos/laravel-cashier-stripe-connect/blob/main/LICENSE) for this project's license.
 
 ## Contributors
 
-This list only contains some of the most notable contributors. For the full list, refer to [GitHub's contributors graph](https://github.com/ExpDev07/laravel-cashier-stripe-connect/graphs/contributors).
-* ExpDev07 (Marius) - creator and maintainer.
+This list only contains some of the most notable contributors. For the full list, refer to [GitHub's contributors graph](https://github.com/Lanos/laravel-cashier-stripe-connect/graphs/contributors).
+* Lanos (Marius) - creator and maintainer.
 * Haytam Bakouane [(hbakouane)](https://github.com/hbakouane) - contributor.
+* Robert Lane
 
 ## Thanks to
 

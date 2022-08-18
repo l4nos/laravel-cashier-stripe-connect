@@ -1,5 +1,5 @@
 {
-    "name": "expdev07/laravel-cashier-stripe-connect",
+    "name": "lanos/laravel-cashier-stripe-connect",
     "description": "Adds Stripe Connect functionality to Laravel's main billing package, Cashier.",
 	"keywords": ["laravel", "stripe", "stripe-connect", "billing"],
     "type": "library",
@@ -28,13 +28,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "ExpDev07\\CashierConnect\\": "src/"
+            "Lanos\\CashierConnect\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "ExpDev07\\CashierConnect\\CashierConnectServiceProvider"
+                "Lanos\\CashierConnect\\CashierConnectServiceProvider"
             ]
         }
     },

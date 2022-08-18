@@ -1,9 +1,9 @@
 <?php
 
 
-namespace ExpDev07\CashierConnect\Concerns;
+namespace Lanos\CashierConnect\Concerns;
 
-use ExpDev07\CashierConnect\Exceptions\AccountNotFoundException;
+use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Stripe\Account;
 use Stripe\AccountLink;
@@ -12,7 +12,7 @@ use Stripe\Exception\ApiErrorException;
 /**
  * Manages links for the Stripe connected account.
  *
- * @package ExpDev07\CashierConnect\Concerns
+ * @package Lanos\CashierConnect\Concerns
  */
 trait ManagesAccountLink
 {

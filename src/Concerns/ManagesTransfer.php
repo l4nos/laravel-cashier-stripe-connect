@@ -1,9 +1,9 @@
 <?php
 
 
-namespace ExpDev07\CashierConnect\Concerns;
+namespace Lanos\CashierConnect\Concerns;
 
-use ExpDev07\CashierConnect\Exceptions\AccountNotFoundException;
+use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Support\Str;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Transfer;
@@ -12,7 +12,7 @@ use Stripe\TransferReversal;
 /**
  * Manages transfers for the Stripe connected account.
  *
- * @package ExpDev07\CashierConnect\Concerns
+ * @package Lanos\CashierConnect\Concerns
  */
 trait ManagesTransfer
 {
@@ -21,14 +21,16 @@ trait ManagesTransfer
      * Transfers the provided amount to the Stripe account.
      *
      * @param int $amount A positive integer in cents representing how much to payout.
-     * @param string $currency Three-letter ISO currency code, in lowercase. Must be a supported currency.
+     * @param mixed $currency Three-letter ISO currency code, in lowercase. Must be a supported currency.
      * @param array $options Any additional options.
      * @return Transfer
      * @throws AccountNotFoundException|ApiErrorException
      */
-    public function transferToStripeAccount(int $amount, string $currency = 'USD', array $options = []): Transfer
+    public function transferToStripeAccount(int $amount, string $currencyToUse = null, array $options = []): Transfer
     {
         $this->assertAccountExists();
+
+        $currency = $this->establishTransferCurrency($currencyToUse);
 
         // Create payload for the transfer.
         $options = array_merge([
@@ -61,6 +63,20 @@ trait ManagesTransfer
         ], $options);
 
         return Transfer::createReversal($transfer->id, $options, $this->stripeAccountOptions());
+    }
+
+    private function establishTransferCurrency($providedCurrency = null){
+
+        if($providedCurrency){
+            return $providedCurrency;
+        }
+
+        if($this->defaultCurrency){
+            return $this->defaultCurrency;
+        }
+
+        return "USD";
+
     }
 
 }

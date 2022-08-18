@@ -1,29 +1,33 @@
 <?php
 
 
-namespace ExpDev07\CashierConnect\Concerns;
+namespace Lanos\CashierConnect\Concerns;
 
-use ExpDev07\CashierConnect\Exceptions\AccountAlreadyExistsException;
-use ExpDev07\CashierConnect\Exceptions\AccountNotFoundException;
-use ExpDev07\CashierConnect\Models\ConnectMapping;
+use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
+use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use Lanos\CashierConnect\Models\ConnectMapping;
 use Stripe\Account;
 use Stripe\Exception\ApiErrorException;
 
 /**
  * Manages a Stripe account for the model.
  *
- * @package ExpDev07\CashierConnect\Concerns
+ * @package Lanos\CashierConnect\Concerns
  */
 trait ManagesAccount
 {
-
 
     /**
      * @return mixed
      */
     public function stripeAccountMapping(){
 
-        return $this->belongsTo(ConnectMapping::class, 'id', 'model_id')->where('model', '=', get_class($this));
+        if($this->incrementing){
+            return $this->belongsTo(ConnectMapping::class, 'id', 'model_id')->where('model', '=', get_class($this));
+        }else{
+            // IF NOT INCREMENTING, IT'S LIKELY TO BE UUID
+            return $this->belongsTo(ConnectMapping::class, 'id', 'model_uuid')->where('model', '=', get_class($this));
+        }
 
     }
 
@@ -143,7 +147,6 @@ trait ManagesAccount
         $this->stripeAccountMapping()->create([
             "stripe_account_id" => $account->id,
             "model" => get_class($this),
-            "model_id" => $this->getModelID()
         ]);
 
         $this->save();
