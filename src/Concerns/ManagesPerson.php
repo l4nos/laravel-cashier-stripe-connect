@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Lanos\CashierConnect\Concerns;
+namespace ExpDev07\CashierConnect\Concerns;
 
 /**
  * Manages person for the Stripe connected account.
  *
- * @package Lanos\CashierConnect\Concerns
+ * @package ExpDev07\CashierConnect\Concerns
  */
 trait ManagesPerson
 {

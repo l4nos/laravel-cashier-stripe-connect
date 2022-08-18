@@ -1,16 +1,16 @@
 <?php
 
 
-namespace Lanos\CashierConnect\Contracts;
+namespace ExpDev07\CashierConnect\Contracts;
 
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use ExpDev07\CashierConnect\Exceptions\AccountNotFoundException;
 use Stripe\Account;
 use Stripe\Exception\ApiErrorException;
 
 /**
  * Stripe account.
  *
- * @package Lanos\CashierConnect\Contracts
+ * @package ExpDev07\CashierConnect\Contracts
  */
 interface StripeAccount
 {

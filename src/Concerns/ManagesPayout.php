@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Lanos\CashierConnect\Concerns;
+namespace ExpDev07\CashierConnect\Concerns;
 
 use Carbon\Traits\Date;
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use ExpDev07\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Support\Str;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Payout;
@@ -12,7 +12,7 @@ use Stripe\Payout;
 /**
  * Manages payout for the Stripe connected account.
  *
- * @package Lanos\CashierConnect\Concerns
+ * @package ExpDev07\CashierConnect\Concerns
  */
 trait ManagesPayout
 {

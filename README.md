@@ -51,9 +51,9 @@ addition, the model should also implement the ``StripeAccount`` interface.
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Lanos\CashierConnect\Contracts\StripeAccount;
+use ExpDev07\CashierConnect\Contracts\StripeAccount;
 use Laravel\Cashier\Billable as CashierBillable;
-use Lanos\CashierConnect\Billable as ConnectBillable;
+use ExpDev07\CashierConnect\Billable as ConnectBillable;
 
 class User extends Authenticatable implements StripeAccount
 {
@@ -184,12 +184,12 @@ protected $primaryKey = 'your_primary_key';
 
 ## License
 
-Please refer to [LICENSE.md](https://github.com/Lanos/laravel-cashier-stripe-connect/blob/main/LICENSE) for this project's license.
+Please refer to [LICENSE.md](https://github.com/ExpDev07/laravel-cashier-stripe-connect/blob/main/LICENSE) for this project's license.
 
 ## Contributors
 
-This list only contains some of the most notable contributors. For the full list, refer to [GitHub's contributors graph](https://github.com/Lanos/laravel-cashier-stripe-connect/graphs/contributors).
-* Lanos (Marius) - creator and maintainer.
+This list only contains some of the most notable contributors. For the full list, refer to [GitHub's contributors graph](https://github.com/ExpDev07/laravel-cashier-stripe-connect/graphs/contributors).
+* ExpDev07 (Marius) - creator and maintainer.
 * Haytam Bakouane [(hbakouane)](https://github.com/hbakouane) - contributor.
 * Robert Lane
 

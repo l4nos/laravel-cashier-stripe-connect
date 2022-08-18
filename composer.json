@@ -28,13 +28,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Lanos\\CashierConnect\\": "src/"
+            "ExpDev07\\CashierConnect\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Lanos\\CashierConnect\\CashierConnectServiceProvider"
+                "ExpDev07\\CashierConnect\\CashierConnectServiceProvider"
             ]
         }
     },
