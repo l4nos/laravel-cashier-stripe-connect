@@ -22,7 +22,7 @@ trait ManagesAccount
      */
     public function stripeAccountMapping()
     {
-        return $this->belongsTo(ConnectMapping::class, $this->primaryKey, $this->getLocalIDField(0))->where('model', '=', get_class($this));
+        return $this->belongsTo(ConnectMapping::class, $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
     }
 
     /**
@@ -223,7 +223,7 @@ trait ManagesAccount
         if($this->incrementing){
             return 'model_id';
         }else{
-            return 'id';
+            return 'model_uuid';
         }
 
     }
