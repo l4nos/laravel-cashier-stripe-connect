@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class ConnectMapping extends Model
 {
 
-    protected $guarded = [];
+    protected $guarded = [
+        "future_requirements" => "json",
+        "requirements" => "json"
+    ];
 
     public $timestamps = false;
 
