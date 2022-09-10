@@ -152,7 +152,7 @@ class StripeController extends Controller
 }
 ```
 
-## Example
+## Transfers & Payouts Example
 
 ```php
 // Get user. This user has added the Billable trait and implements StripeAccount.
@@ -164,7 +164,62 @@ $user->transferToStripeAccount(1000);
 // Payout 5 dollars to the user's bank account, which will arrive in 1 week.
 $user->payoutStripeAccount(500, Date::now()->addWeek());
 
+
 ```
+
+## Direct Charges Example
+In the example below we create a direct charge. A direct charge (present on the shopify style payment model) is as described, a direct transaction between the platforms user (connected account) and the customer. The platform does not interfere with this other than taking platform fees. As a result direct charges do not show on your stripe dashboard but show against hte connected account's dashboard. The connected account is liable for stripe fees. 
+
+```php
+// Take payment of 50GBP directly into the connected account
+$user->createDirectCharge(5000, 'GBP');
+```
+
+## Destination Charges Example
+Destination charges are slightly different, they pass through your stripe account but are immediately routed to the connected account once successfully taken. This is typical for payment models like Lyft etc. Again you can extract platform fees during this process too. With destination charges, the platform pays the stripe fees.  
+
+```php
+// Take payment of 50GBP and transfer to the connected account.
+$user->createDestinationCharge(5000, 'GBP');
+```
+
+## Platform Fee Configuration
+Against your model you can set the application fee settings. This can either be a percentage or a fixed number. Below both examples are shown of the properties being set against the user model.
+
+When using fixed transaction fee's it's important to note the fees must not be higher than the amount of the transaction. A percentage based fee is always encouraged.
+
+### Percentage based platform fee
+
+```php
+use ExpDev07\CashierConnect\Billable;
+
+class user extends Model implements StripeAccount{
+
+    use Billable;
+    
+    public $commission_type = 'percentage';
+    public $commission_rate = 5;
+
+}
+
+```
+
+### Fixed based platform fee
+
+```php
+use ExpDev07\CashierConnect\Billable;
+
+class user extends Model implements StripeAccount{
+
+    use Billable;
+    
+    public $commission_type = 'fixed';
+    public $commission_rate = 500; // E.G. £5 application fee
+
+}
+
+```
+
 
 ## UUID Usage
 
