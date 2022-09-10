@@ -26,6 +26,23 @@ trait ManagesAccount
     }
 
     /**
+     * Updates and returns the updated requirements against the stripe API for the mapping
+     * @return ConnectMapping
+     */
+    public function updateStripeStatus(){
+
+        $mapping = $this->stripeAccountMapping()->first();
+        $account = $this->asStripeAccount();
+
+        $mapping->charges_enabled = $account->charges_enabled;
+        $mapping->future_requirements = $account->future_requirements;
+        $mapping->requirements = $account->requirements;
+        $mapping->save();
+
+        return $mapping;
+    }
+
+    /**
      * Retrieve the Stripe account ID.
      *
      * @return string|null
@@ -230,5 +247,5 @@ trait ManagesAccount
         }
 
     }
-    
+
 }
