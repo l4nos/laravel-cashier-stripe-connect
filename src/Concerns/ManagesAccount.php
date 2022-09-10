@@ -37,6 +37,12 @@ trait ManagesAccount
         $mapping->charges_enabled = $account->charges_enabled;
         $mapping->future_requirements = $account->future_requirements;
         $mapping->requirements = $account->requirements;
+
+        // THIS ALLOWS US TO DIFFERENTIATE BETWEEN ACCOUNTS THAT NEED NEW KYC REQUIREMENTS AND ACCOUNTS THAT
+        if(!$mapping->first_onboarding_done && $account->charges_enabled){
+            $mapping->first_onboarding_done = 1;
+        }
+
         $mapping->save();
 
         return $mapping;
