@@ -230,5 +230,5 @@ trait ManagesAccount
         }
 
     }
-
+    
 }

@@ -19,7 +19,7 @@ class AddAccountColumns extends Migration
     {
         Schema::table('stripe_connect_mappings', function (Blueprint $table) {
             $table->json('future_requirements')->nullable();
-            $table->boolean('payouts_enabled')->default(false);
+            $table->boolean('charges_enabled')->default(false);
             $table->json('requirements')->nullable();
         });
     }
@@ -33,7 +33,7 @@ class AddAccountColumns extends Migration
     {
         Schema::table('stripe_connect_mappings', function (Blueprint $table) {
             $table->dropColumn('future_requirements');
-            $table->dropColumn('payouts_enabled');
+            $table->dropColumn('charges_enabled');
             $table->dropColumn('requirements');
         });
     }
