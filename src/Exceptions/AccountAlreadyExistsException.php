@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ExpDev07\CashierConnect\Exceptions;
+namespace Lanos\CashierConnect\Exceptions;
 
 
 use Exception;
@@ -9,7 +9,7 @@ use Exception;
 /**
  * Thrown when a Stripe account already exists.
  *
- * @package ExpDev07\CashierConnect\Exceptions
+ * @package Lanos\CashierConnect\Exceptions
  */
 class AccountAlreadyExistsException extends Exception
 {

@@ -1,18 +1,18 @@
 <?php
 
 
-namespace ExpDev07\CashierConnect\Concerns;
+namespace Lanos\CashierConnect\Concerns;
 
-use ExpDev07\CashierConnect\Exceptions\AccountAlreadyExistsException;
-use ExpDev07\CashierConnect\Exceptions\AccountNotFoundException;
-use ExpDev07\CashierConnect\Models\ConnectMapping;
+use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
+use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use Lanos\CashierConnect\Models\ConnectMapping;
 use Stripe\Account;
 use Stripe\Exception\ApiErrorException;
 
 /**
  * Manages a Stripe account for the model.
  *
- * @package ExpDev07\CashierConnect\Concerns
+ * @package Lanos\CashierConnect\Concerns
  */
 trait ManagesAccount
 {

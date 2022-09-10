@@ -1,8 +1,8 @@
 <?php
 
-namespace ExpDev07\CashierConnect\Models;
+namespace Lanos\CashierConnect\Models;
 
-use ExpDev07\CashierConnect\Billable;
+use Lanos\CashierConnect\Billable;
 use Illuminate\Database\Eloquent\Model;
 
 class TestModel extends Model
