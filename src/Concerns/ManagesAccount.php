@@ -140,6 +140,9 @@ trait ManagesAccount
         // Save the id.
         $this->stripeAccountMapping()->create([
             "stripe_account_id" => $account->id,
+            "charges_enabled" => $account->charges_enabled,
+            "future_requirements" => $account->future_requirements,
+            "requirements" => $account->requirements,
             "model" => get_class($this),
             $this->getLocalIDField() => $this->{$this->primaryKey}
         ]);
