@@ -1,22 +1,22 @@
 <h1 align=center>
-	laravel-cashier-stripe-connect
+	Laravel Cashier Connect
 </h1>
- 
-<p align="center">
-	<a href="https://packagist.org/packages/expdev07/laravel-cashier-stripe-connect"><img src="https://img.shields.io/packagist/dt/expdev07/laravel-cashier-stripe-connect" alt="Total Downloads"></a>
-	<a href="https://packagist.org/packages/expdev07/laravel-cashier-stripe-connect"><img src="https://img.shields.io/packagist/v/expdev07/laravel-cashier-stripe-connect" alt="Latest Stable Version"></a>
-	<a href="https://packagist.org/packages/expdev07/laravel-cashier-stripe-connect"><img src="https://img.shields.io/packagist/l/expdev07/laravel-cashier-stripe-connect" alt="License"></a>
-</p>
 
-<p>
-    <a href='https://ko-fi.com/C1C510DUQ' target='_blank'>
-	<img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' />
-    </a>
-</p>
+> ### Features
+> This library offers immedaite stripe connect functionality without the hours of development needed. Simply add the Stripe connect billable trait to your model(s) and configure them as needed.
+> 
+> - Multi Model support - Previously only supported the User model, now any model can have the Connect Billable trait added to it and immediately inherit functionality.
+> - Generate onboarding links
+> - Direct Charges
+> - Destination Charges
+> - Tenancy for Laravel Support (Multi Tenant SaaS Plugin)
 
-> Originally this package only supported adding ConnectBillable to the User Model. This has now been changed so you can add it to any model and even transfer funds between different models. This packagr also now supports UUID primary key's on billable models.
-
-> 💲 Adds Stripe Connect functionality to Laravel's main billing package, Cashier. Simply works as a drop-in on top of Cashier, with no extra configuration.
+> ### Coming Soon
+> 
+> - Connect webhook(s)
+> - Connected account product management
+> - Connected account customers management
+> - Connected account subscriptions
 
 ## Installation for Single Tenancy Applications
 
@@ -244,10 +244,11 @@ Please refer to [LICENSE.md](https://github.com/Lanos/laravel-cashier-stripe-con
 ## Contributors
 
 This list only contains some of the most notable contributors. For the full list, refer to [GitHub's contributors graph](https://github.com/Lanos/laravel-cashier-stripe-connect/graphs/contributors).
-* Lanos (Marius) - creator and maintainer.
-* Haytam Bakouane [(hbakouane)](https://github.com/hbakouane) - contributor.
-* Robert Lane
+* ExpDev07 [(Marius)](https://github.com/ExpDev07) - Creator of the original package
+* Haytam Bakouane [(hbakouane)](https://github.com/hbakouane) - contributor to original package.
+* Robert Lane (Me) - Creator of the new package
 
 ## Thanks to
 
 [Taylor Otwell](https://twitter.com/taylorotwell) for his amazing framework and [all the contributors of Cashier](https://github.com/laravel/cashier-stripe/graphs/contributors).
+
