@@ -65,18 +65,4 @@ trait ManagesTransfer
         return Transfer::createReversal($transfer->id, $options, $this->stripeAccountOptions());
     }
 
-    private function establishTransferCurrency($providedCurrency = null){
-
-        if($providedCurrency){
-            return $providedCurrency;
-        }
-
-        if($this->defaultCurrency){
-            return $this->defaultCurrency;
-        }
-
-        return "USD";
-
-    }
-
 }

@@ -4,6 +4,7 @@
 namespace ExpDev07\CashierConnect;
 
 
+use ExpDev07\CashierConnect\Concerns\CanCharge;
 use ExpDev07\CashierConnect\Concerns\ManagesAccount;
 use ExpDev07\CashierConnect\Concerns\ManagesAccountLink;
 use ExpDev07\CashierConnect\Concerns\ManagesBalance;
@@ -24,6 +25,7 @@ trait Billable
     use ManagesPerson;
     use ManagesBalance;
     use ManagesTransfer;
+    use CanCharge;
     use ManagesPayout;
 
     /**
@@ -51,6 +53,20 @@ trait Billable
         return array_merge($options, [
             'api_key' => $stripeOptions->getApiKey()
         ]);
+    }
+
+    public function establishTransferCurrency($providedCurrency = null){
+
+        if($providedCurrency){
+            return $providedCurrency;
+        }
+
+        if($this->defaultCurrency){
+            return $this->defaultCurrency;
+        }
+
+        return "USD";
+
     }
 
 }
