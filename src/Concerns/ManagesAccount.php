@@ -39,6 +39,8 @@ trait ManagesAccount
             "charges_enabled" => $account->charges_enabled
         ]);
 
+        $this->refresh();
+
         return $this->stripeAccountMapping;
     }
 
