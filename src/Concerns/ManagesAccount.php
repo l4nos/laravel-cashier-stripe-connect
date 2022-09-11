@@ -33,7 +33,7 @@ trait ManagesAccount
 
         $account = $this->asStripeAccount();
 
-        $this->stripeAccountMapping()->update([
+        $mapping = $this->stripeAccountMapping()->update([
             "future_requirements" => $account->future_requirements->toArray(),
             "requirements" => $account->requirements->toArray(),
             "charges_enabled" => $account->charges_enabled
@@ -49,7 +49,7 @@ trait ManagesAccount
      */
     public function stripeAccountId(): ?string
     {
-        return $this->stripeAccountMapping()->first()->stripe_account_id;
+        return $this->stripeAccountMapping->stripe_account_id;
     }
 
     /**
