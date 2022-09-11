@@ -31,21 +31,15 @@ trait ManagesAccount
      */
     public function updateStripeStatus(){
 
-        $mapping = $this->stripeAccountMapping()->first();
         $account = $this->asStripeAccount();
 
-        $mapping->charges_enabled = $account->charges_enabled;
-        $mapping->future_requirements = $account->future_requirements;
-        $mapping->requirements = $account->requirements;
+        $this->stripeAccountMapping()->update([
+            "future_requirements" => $account->future_requirements->toArray(),
+            "requirements" => $account->requirements->toArray(),
+            "charges_enabled" => $account->charges_enabled
+        ]);
 
-        // THIS ALLOWS US TO DIFFERENTIATE BETWEEN ACCOUNTS THAT NEED NEW KYC REQUIREMENTS AND ACCOUNTS THAT
-        if(!$mapping->first_onboarding_done && $account->charges_enabled){
-            $mapping->first_onboarding_done = 1;
-        }
-
-        $mapping->save();
-
-        return $mapping;
+        return $this->stripeAccountMapping;
     }
 
     /**
