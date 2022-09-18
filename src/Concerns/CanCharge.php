@@ -80,6 +80,8 @@ trait CanCharge
 
     }
 
+
+
     private function calculatePercentageFee($amount){
         if($this->commission_rate < 100){
             return ($this->commission_rate / 100) * $amount;
