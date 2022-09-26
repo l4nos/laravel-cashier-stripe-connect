@@ -21,4 +21,17 @@ trait ManagesConnectSubscriptions
     // TODO CREATE SUBSCRIPTION
     // TODO CANCEL SUBSCRIPTION
 
+    /**
+     * Creates a subscription between this account model and a customer model
+     * @param $customer // Any model with ConnectCustomer trait
+     * @param string $paymentMethod // Payment method ID from stripe, this can be set up on frontend with setup intent
+     * @return void
+     */
+    public function createSubscription($customer, string $paymentMethod ){
+
+
+
+    }
+
+
 }

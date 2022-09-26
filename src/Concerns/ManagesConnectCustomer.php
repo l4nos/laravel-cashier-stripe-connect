@@ -18,6 +18,9 @@ use Stripe\Transfer;
 trait ManagesConnectCustomer
 {
 
+    /* TODO - Not entirely sure what needs to be done from the merchant's perspective in regards to customers. */
+    /* TODO - I suspect getting one and many of their customer records and corresponding parent models, need to assess how intensive that is on database */
+
 
 
 }
