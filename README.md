@@ -297,7 +297,7 @@ Please refer to [LICENSE.md](https://github.com/Lanos/laravel-cashier-stripe-con
 
 This list only contains some of the most notable contributors. For the full list, refer to [GitHub's contributors graph](https://github.com/Lanos/laravel-cashier-stripe-connect/graphs/contributors).
 * ExpDev07 [(Marius)](https://github.com/ExpDev07) - Creator of the original package
-* Haytam Bakouane [(hbakouane)](https://github.com/hbakouane) - contributor to original package.
+* Haytam Bakouane [(hbakouane)](https://github.com/hbakouane) - Contributor to original package.
 * Robert Lane (Me) - Creator of the new package
 
 ## Thanks to
