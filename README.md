@@ -256,7 +256,7 @@ Now your customer model and store model are mapped together and this can be used
 
 This is for creating subscriptions from the end customer to the connected account. Click below to learn more about direct charge subscriptions with connected accounts and understand what the prerequisites are.
 
-[Click here ot view the prerequisites as outlined by stripe](https://stripe.com/docs/connect/subscriptions#customer-platform--prerequisites)
+[Click here to view the prerequisites as outlined by stripe](https://stripe.com/docs/connect/subscriptions#customer-platform--prerequisites)
 
 These are outlined below loosely related into laravel:
 
