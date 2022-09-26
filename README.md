@@ -256,7 +256,7 @@ class Customer extends Model implements StripeAccount{
 
 ```
 
-Once you have created your customer model you can then create the corresponding stripe customer and map it to the connected accuont.
+Once you have created your customer model you can then create the corresponding stripe customer and map it to the connected account.
 
 Your Store model must have the billable trait for this to work
 
