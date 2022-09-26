@@ -228,18 +228,6 @@ class Store extends Model implements StripeAccount{
 It is now possible for a connected account to have direct customers, so instead of those customers appearing in your platform's stripe dashboard they will appear in the dashboard for the connected account they belong to.
 
 You can now map that functionality to a model. For our example we will make the Customer model a direct customer of the Store Model. We will do that by adding the trait.
-## UUID Usage
-
-Some people prefer to use Ordered UUID's, this has become more common since Laravel 9. The package will automatically detect if you are using a non integer primary key on your model, as long as you have the following property set on your model it should work fine.
-
-
-```php
-public $incrementing = false;
-```
-
-## Custom Primary Key Usage
-
-This package will correctly recognise your custom primary key, as long as you use the following correctly.
 
 ```php
 use Lanos\CashierConnect\ConnectCustomer;
@@ -263,6 +251,19 @@ Customer::createStripeCustomer($store, $customerData)
 ```
 
 Now your customer model and store model are mapped together and this can be used once the subscription functionality is developed. That is coming next.
+
+
+## UUID Usage
+
+Some people prefer to use Ordered UUID's, this has become more common since Laravel 9. The package will automatically detect if you are using a non integer primary key on your model, as long as you have the following property set on your model it should work fine.
+
+```php
+public $incrementing = false;
+```
+
+## Custom Primary Key Usage
+
+This package will correctly recognise your custom primary key, as long as you use the following correctly.
 
 ## License
 
