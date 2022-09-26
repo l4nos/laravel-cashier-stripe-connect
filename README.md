@@ -228,14 +228,10 @@ class Store extends Model implements StripeAccount{
 It is now possible for a connected account to have direct customers, so instead of those customers appearing in your platform's stripe dashboard they will appear in the dashboard for the connected account they belong to.
 
 You can now map that functionality to a model. For our example we will make the Customer model a direct customer of the Store Model. We will do that by adding the trait.
-
-```php
-public $incrementing = false;
-```
-
 ## UUID Usage
 
 Some people prefer to use Ordered UUID's, this has become more common since Laravel 9. The package will automatically detect if you are using a non integer primary key on your model, as long as you have the following property set on your model it should work fine.
+
 
 ```php
 public $incrementing = false;
