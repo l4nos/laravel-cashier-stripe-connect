@@ -11,12 +11,12 @@
 > - Destination Charges
 > - Tenancy for Laravel Support (Multi Tenant SaaS Plugin)
 > - Connected account customer management (Direct Customers)
+> - Connected account payment method management
+> - Connected account subscriptions ( Direct Subscriptions )
 
 > ### Coming Soon
-> 
 > - Connect webhook(s)
 > - Connected account product management
-> - Connected account subscriptions ( Direct Subscriptions )
 
 ## Installation for Single Tenancy Applications
 
@@ -247,11 +247,31 @@ Your Store model must have the billable trait for this to work
 The customer data is as per the stripe documentation
 
 ```php
-Customer::createStripeCustomer($store, $customerData)
+$customer = Customer::createStripeCustomer($store, $customerData)
 ```
 
 Now your customer model and store model are mapped together and this can be used once the subscription functionality is developed. That is coming next.
 
+## Connected Account Subscriptions (Using Direct Charges)
+
+This is for creating subscriptions from the end customer to the connected account. Click below to learn more about direct charge subscriptions with connected accounts and understand what the prerequisites are.
+
+[Click here ot view the prerequisites as outlined by stripe](https://stripe.com/docs/connect/subscriptions#customer-platform--prerequisites)
+
+These are outlined below loosely related into laravel:
+
+- A customer model (with ConnectedCustomer trait and created in stripe as above)
+- A merchant or connected account model (with ConnectBillable trait and onboarded as outlined above)
+- A connected account product with price (Currently not creatable via this package, must be done via the connected account dashboard) (COMING SOON)
+
+Let's assume you have all 3 you would just run the following function:
+
+```php
+$store->createDirectSubscription($customer, $price, $data);
+```
+
+The $customer variable would be your eloquent model that is set up on connect with the ConnectCustomer trait.
+The $price would be the string of your price id from stripe. The $data model would be any additional data or settings you want to apply to the subscription such as quantity or trial options as per the stripe API documentation. 
 
 ## UUID Usage
 

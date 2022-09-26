@@ -24,7 +24,7 @@ trait ConnectCustomer
 {
 
     use ManageCustomer;
-    use ManagePaymentMethods;
+    use ManageConnectedPaymentMethods;
 
     /**
      * Let's say you had a connected store model and a connected customer model

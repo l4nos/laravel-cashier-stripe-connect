@@ -8,7 +8,7 @@ use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentMethod;
 
-trait ManagePaymentMethods
+trait ManageConnectedPaymentMethods
 {
 
     // NOTE: Setup intents are not the recommended way for connected accounts, you should either save the payment for later after taking a payment
