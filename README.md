@@ -10,13 +10,13 @@
 > - Direct Charges
 > - Destination Charges
 > - Tenancy for Laravel Support (Multi Tenant SaaS Plugin)
+> - Connected account customer management (Direct Customers)
 
 > ### Coming Soon
 > 
 > - Connect webhook(s)
 > - Connected account product management
-> - Connected account customers management
-> - Connected account subscriptions
+> - Connected account subscriptions ( Direct Subscriptions )
 
 ## Installation for Single Tenancy Applications
 
@@ -42,20 +42,23 @@
 
 The library builds on the official [Cashier](https://laravel.com/docs/8.x/billing) library, so getting up and started is a breeze.
 
-### Setup model
+### Setup connected account model
 
 Add the ``Billable`` traits to your model. You can use them individually or together. You can also create your own ``Billable`` trait and put them together there. In 
 addition, the model should also implement the ``StripeAccount`` interface.
 
+For the purposes of the examples outlined below we will replicate the marketplace style payment model where you have a Store model and a Customer model.
+
+There are 2 ways in which customers can exist, as customers of the platform (by using destination charges or transfers) or as direct customers of the connected account. We will touch on both examples in this guide.
+
 ```php
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Lanos\CashierConnect\Contracts\StripeAccount;
 use Laravel\Cashier\Billable as CashierBillable;
 use Lanos\CashierConnect\Billable as ConnectBillable;
 
-class User extends Authenticatable implements StripeAccount
+class Store extends Model implements StripeAccount
 {
     use CashierBillable;
     use ConnectBillable;
@@ -67,13 +70,13 @@ class User extends Authenticatable implements StripeAccount
 
 ### Create controller
 
-Create a controller to manage on-boarding process. The example below registers an Express account for the user.
+Create a controller to manage on-boarding process. The example below registers an Express account for the store.
 
 ```php
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Store;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use URL;
@@ -82,14 +85,14 @@ class StripeController extends Controller
 {
 
     /**
-     * Creates an onboarding link and redirects the user there.
+     * Creates an onboarding link and redirects the store there.
      *
      * @param Request $request
      * @return RedirectResponse
      */
     public function board(Request $request): RedirectResponse
     {
-        return $this->handleBoardingRedirect($request->user());
+        return $this->handleBoardingRedirect($request->store());
     }
 
     /**
@@ -100,7 +103,7 @@ class StripeController extends Controller
      */
     public function returning(Request $request): RedirectResponse
     {
-        return $this->handleBoardingRedirect($request->user());
+        return $this->handleBoardingRedirect($request->store());
     }
 
     /**
@@ -111,27 +114,27 @@ class StripeController extends Controller
      */
     public function refresh(Request $request): RedirectResponse
     {
-        return $this->handleBoardingRedirect($request->user());
+        return $this->handleBoardingRedirect($request->store());
     }
 
     /**
-     * Handles the redirection logic of Stripe onboarding for the given user. Will 
-     * create account and redirect user to onboarding process or redirect to account 
+     * Handles the redirection logic of Stripe onboarding for the given store. Will 
+     * create account and redirect store to onboarding process or redirect to account 
      * dashboard if they have already completed the process.
      *
-     * @param User $user
+     * @param Store $Store
      * @return RedirectResponse
      */
-    private function handleBoardingRedirect(User $user): RedirectResponse
+    private function handleBoardingRedirect(Store $Store): RedirectResponse
     {
         // Redirect to dashboard if onboarding is already completed.
-        if ($user->hasStripeAccountId() && $user->hasCompletedOnboarding()) {
-            return $user->redirectToAccountDashboard();
+        if ($store->hasStripeAccountId() && $store->hasCompletedOnboarding()) {
+            return $store->redirectToAccountDashboard();
         }
 
         // Delete account if already exists and create new express account with 
         // weekly payouts.
-        $user->deleteAndCreateStripeAccount('express', [
+        $store->deleteAndCreateStripeAccount('express', [
             'settings' => [
                 'payouts' => [ 
                     'schedule' => [ 
@@ -143,9 +146,9 @@ class StripeController extends Controller
         ]);
 
         // Redirect to Stripe account onboarding, with return and refresh url, otherwise.
-        return $user->redirectToAccountOnboarding(
-            URL::to('/api/stripe/return?api_token=' . $user->api_token),
-            URL::to('/api/stripe/refresh?api_token=' . $user->api_token)
+        return $store->redirectToAccountOnboarding(
+            URL::to('/api/stripe/return?api_token=' . $store->api_token),
+            URL::to('/api/stripe/refresh?api_token=' . $store->api_token)
         );
     }
 
@@ -155,24 +158,24 @@ class StripeController extends Controller
 ## Transfers & Payouts Example
 
 ```php
-// Get user. This user has added the Billable trait and implements StripeAccount.
-$user = User::query()->find(1);
+// Get store. This store has added the Billable trait and implements StripeAccount.
+$store = Store::query()->find(1);
 
-// Transfer 10 USD to the user.
-$user->transferToStripeAccount(1000);
+// Transfer 10 USD to the store.
+$store->transferToStripeAccount(1000);
 
-// Payout 5 dollars to the user's bank account, which will arrive in 1 week.
-$user->payoutStripeAccount(500, Date::now()->addWeek());
+// Payout 5 dollars to the store's bank account, which will arrive in 1 week.
+$store->payoutStripeAccount(500, Date::now()->addWeek());
 
 
 ```
 
 ## Direct Charges Example
-In the example below we create a direct charge. A direct charge (present on the shopify style payment model) is as described, a direct transaction between the platforms user (connected account) and the customer. The platform does not interfere with this other than taking platform fees. As a result direct charges do not show on your stripe dashboard but show against hte connected account's dashboard. The connected account is liable for stripe fees. 
+In the example below we create a direct charge. A direct charge (present on the shopify style payment model) is as described, a direct transaction between the platforms store (connected account) and the customer. The platform does not interfere with this other than taking platform fees. As a result direct charges do not show on your stripe dashboard but show against hte connected account's dashboard. The connected account is liable for stripe fees. 
 
 ```php
 // Take payment of 50GBP directly into the connected account
-$user->createDirectCharge(5000, 'GBP');
+$store->createDirectCharge(5000, 'GBP');
 ```
 
 ## Destination Charges Example
@@ -180,11 +183,11 @@ Destination charges are slightly different, they pass through your stripe accoun
 
 ```php
 // Take payment of 50GBP and transfer to the connected account.
-$user->createDestinationCharge(5000, 'GBP');
+$store->createDestinationCharge(5000, 'GBP');
 ```
 
 ## Platform Fee Configuration
-Against your model you can set the application fee settings. This can either be a percentage or a fixed number. Below both examples are shown of the properties being set against the user model.
+Against your model you can set the application fee settings. This can either be a percentage or a fixed number. Below both examples are shown of the properties being set against the store model.
 
 When using fixed transaction fee's it's important to note the fees must not be higher than the amount of the transaction. A percentage based fee is always encouraged.
 
@@ -193,7 +196,7 @@ When using fixed transaction fee's it's important to note the fees must not be h
 ```php
 use Lanos\CashierConnect\Billable;
 
-class User extends Authenticatable implements StripeAccount{
+class Store extends Model implements StripeAccount{
 
     use Billable;
     
@@ -209,7 +212,7 @@ class User extends Authenticatable implements StripeAccount{
 ```php
 use Lanos\CashierConnect\Billable;
 
-class User extends Authenticatable implements StripeAccount{
+class Store extends Model implements StripeAccount{
 
     use Billable;
     
@@ -220,6 +223,15 @@ class User extends Authenticatable implements StripeAccount{
 
 ```
 
+## Connected Account Customers (For Direct Payments / Subscriptions)
+
+It is now possible for a connected account to have direct customers, so instead of those customers appearing in your platform's stripe dashboard they will appear in the dashboard for the connected account they belong to.
+
+You can now map that functionality to a model. For our example we will make the Customer model a direct customer of the Store Model. We will do that by adding the trait.
+
+```php
+public $incrementing = false;
+```
 
 ## UUID Usage
 
@@ -234,8 +246,27 @@ public $incrementing = false;
 This package will correctly recognise your custom primary key, as long as you use the following correctly.
 
 ```php
-protected $primaryKey = 'your_primary_key';
+use Lanos\CashierConnect\ConnectCustomer;
+
+class Customer extends Model implements StripeAccount{
+
+    use ConnectCustomer;
+   
+}
+
 ```
+
+Once you have created your customer model you can then create the corresponding stripe customer and map it to the connected accuont.
+
+Your Store model must have the billable trait for this to work
+
+The customer data is as per the stripe documentation
+
+```php
+Customer::createStripeCustomer($store, $customerData)
+```
+
+Now your customer model and store model are mapped together and this can be used once the subscription functionality is developed. That is coming next.
 
 ## License
 

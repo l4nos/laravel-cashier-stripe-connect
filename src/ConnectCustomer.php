@@ -149,7 +149,7 @@ trait ConnectCustomer
      * @throws AccountAlreadyExistsException
      * @throws AccountNotFoundException
      */
-    public function createCustomer($connectedAccount, array $customerData = []){
+    public function createStripeCustomer($connectedAccount, array $customerData = []){
 
         // Check if model already has a connected Stripe account.
         if ($this->hasCustomerRecord()) {
