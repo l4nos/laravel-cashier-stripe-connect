@@ -285,6 +285,10 @@ public $incrementing = false;
 
 This package will correctly recognise your custom primary key, as long as you use the following correctly.
 
+```php
+protected $primaryKey = 'your_id';
+```
+
 ## License
 
 Please refer to [LICENSE.md](https://github.com/Lanos/laravel-cashier-stripe-connect/blob/main/LICENSE) for this project's license.
