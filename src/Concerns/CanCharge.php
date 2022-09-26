@@ -5,7 +5,6 @@ namespace Lanos\CashierConnect\Concerns;
 
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Support\Str;
-use mysql_xdevapi\Exception;
 use Stripe\Balance;
 use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;
@@ -86,7 +85,7 @@ trait CanCharge
         if($this->commission_rate < 100){
             return ($this->commission_rate / 100) * $amount;
         }else{
-            throw new Exception('You cannot charge more than 100% fee.');
+            throw new \Exception('You cannot charge more than 100% fee.');
         }
     }
 

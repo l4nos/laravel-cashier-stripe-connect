@@ -8,6 +8,8 @@ use Lanos\CashierConnect\Concerns\CanCharge;
 use Lanos\CashierConnect\Concerns\ManagesAccount;
 use Lanos\CashierConnect\Concerns\ManagesAccountLink;
 use Lanos\CashierConnect\Concerns\ManagesBalance;
+use Lanos\CashierConnect\Concerns\ManagesConnectCustomer;
+use Lanos\CashierConnect\Concerns\ManagesConnectSubscriptions;
 use Lanos\CashierConnect\Concerns\ManagesPerson;
 use Lanos\CashierConnect\Concerns\ManagesPayout;
 use Lanos\CashierConnect\Concerns\ManagesTransfer;
@@ -25,6 +27,8 @@ trait Billable
     use ManagesPerson;
     use ManagesBalance;
     use ManagesTransfer;
+    use ManagesConnectCustomer;
+    use ManagesConnectSubscriptions;
     use CanCharge;
     use ManagesPayout;
 
