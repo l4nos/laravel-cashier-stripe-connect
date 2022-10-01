@@ -1,5 +1,5 @@
 <h1 align=center>
-	Laravel Cashier Connect
+	Cashier For Connect
 </h1>
 
  ## Intro
@@ -27,4 +27,3 @@ This list only contains some of the most notable contributors. For the full list
 ## Thanks to
 
 [Taylor Otwell](https://twitter.com/taylorotwell) for his amazing framework and [all the contributors of Cashier](https://github.com/laravel/cashier-stripe/graphs/contributors).
-
