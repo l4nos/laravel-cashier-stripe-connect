@@ -9,6 +9,7 @@ use Lanos\CashierConnect\Concerns\ManagesAccount;
 use Lanos\CashierConnect\Concerns\ManagesAccountLink;
 use Lanos\CashierConnect\Concerns\ManagesBalance;
 use Lanos\CashierConnect\Concerns\ManagesConnectCustomer;
+use Lanos\CashierConnect\Concerns\ManagesConnectProducts;
 use Lanos\CashierConnect\Concerns\ManagesConnectSubscriptions;
 use Lanos\CashierConnect\Concerns\ManagesPerson;
 use Lanos\CashierConnect\Concerns\ManagesPayout;
@@ -22,6 +23,7 @@ use Laravel\Cashier\Cashier;
  */
 trait Billable
 {
+
     use ManagesAccount;
     use ManagesAccountLink;
     use ManagesPerson;
@@ -29,6 +31,7 @@ trait Billable
     use ManagesTransfer;
     use ManagesConnectCustomer;
     use ManagesConnectSubscriptions;
+    use ManagesConnectProducts;
     use CanCharge;
     use ManagesPayout;
 
