@@ -43,6 +43,29 @@ trait ManagesConnectProducts
     }
 
     /**
+     * Creates a stripe product against the connected account
+     * @param $data
+     * @return Product
+     * @throws ApiErrorException
+     */
+    public function createConnectedProduct($data): Product
+    {
+        return Product::create($data, $this->stripeAccountOptions([], true));
+    }
+
+    /**
+     * Edits a stripe product against the connected account
+     * @param $id
+     * @param $data
+     * @return Product
+     * @throws ApiErrorException
+     */
+    public function editConnectedProduct($id, $data): Product
+    {
+        return Product::update($id, $data, $this->stripeAccountOptions([], true));
+    }
+
+    /**
      * @param $id
      * @return Collection
      * @throws ApiErrorException
@@ -55,26 +78,40 @@ trait ManagesConnectProducts
     }
 
     /**
-     * Creates a stripe product against the connected account
+     * Creates a price for a product on a connected account
+     * @param $id
      * @param $data
-     * @return Product
+     * @return Price
      * @throws ApiErrorException
      */
-    public function createConnectedProduct($data): Product
+    public function createPriceForConnectedProduct($id, $data): Price
     {
-        return Product::create($data, $this->stripeAccountOptions([], true));
+        return Price::create($data + [
+            "product" => $id
+        ], $this->stripeAccountOptions([], true) );
     }
 
     /**
-     * Creates a stripe product against the connected account
+     * Gets single price against a product against a connected account
      * @param $id
-     * @param $data
-     * @return Product
+     * @return Price
      * @throws ApiErrorException
      */
-    public function editConnectedProduct($id, $data): Product
+    public function getSingleConnectedPrice($id): Price
     {
-        return Product::update($id, $data, $this->stripeAccountOptions([], true));
+        return Price::retrieve($id, $this->stripeAccountOptions([], true) );
+    }
+
+    /**
+     * Edits a stripe price against the connected account
+     * @param $id
+     * @param $data
+     * @return Price
+     * @throws ApiErrorException
+     */
+    public function editConnectedPrice($id, $data): Price
+    {
+        return Price::update($id, $data, $this->stripeAccountOptions([], true));
     }
 
 }
