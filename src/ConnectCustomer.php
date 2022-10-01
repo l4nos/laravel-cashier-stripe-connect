@@ -5,15 +5,10 @@ namespace Lanos\CashierConnect;
 
 
 use Exception;
-use Illuminate\Database\Eloquent\Model;
+use Lanos\CashierConnect\Concerns\ManageConnectedPaymentMethods;
 use Lanos\CashierConnect\Concerns\ManageCustomer;
-use Lanos\CashierConnect\Concerns\ManagePaymentMethods;
-use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
-use Lanos\CashierConnect\Models\ConnectMapping;
 use Laravel\Cashier\Cashier;
-use Stripe\Customer;
-use Stripe\Exception\ApiErrorException;
 
 /**
  * Added to connected customer models to allow localized management of subscriptions
