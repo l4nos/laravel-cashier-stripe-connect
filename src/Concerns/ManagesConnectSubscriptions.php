@@ -5,6 +5,8 @@ namespace Lanos\CashierConnect\Concerns;
 use Exception;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Support\Str;
+use Lanos\CashierConnect\Models\ConnectSubscription;
+use Lanos\CashierConnect\Models\ConnectSubscriptionItem;
 use Stripe\Balance;
 use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;
@@ -28,7 +30,7 @@ trait ManagesConnectSubscriptions
      * @return Subscription
      */
 
-    public function createDirectSubscription($customer, $price, $quantity = 1, $data = [])
+    public function createDirectSubscription($customer, $price, $quantity = 1, $data = [], $name = 'default')
     {
 
         // APPLY PLATFORM FEE COMMISSION - SET THIS AGAINST THE MODEL
@@ -40,7 +42,9 @@ trait ManagesConnectSubscriptions
             }
         }
 
-        return Subscription::create(
+        $customerID = $this->determineCustomerInput($customer);
+
+        $subscription = Subscription::create(
             $data + [
                 "customer" => $this->determineCustomerInput($customer),
                 "items" => [
@@ -49,6 +53,26 @@ trait ManagesConnectSubscriptions
                 "payment_behavior" => "default_incomplete",
                 "expand" => ["latest_invoice.payment_intent"]
             ], $this->stripeAccountOptions([], true));
+
+        // GENERATE DATABASE RECORD FOR SUBSCRIPTION
+        $ConnectSubscriptionRecord = ConnectSubscription::create([
+            "name" => $name,
+            "stripe_id" => $subscription->id,
+            "stripe_status" => $subscription->status,
+            "connected_price_id" => $price,
+            "stripe_customer_id" => $customerID,
+            "stripe_account_Id" => $this->stripeAccountId()
+        ]);
+
+        $ConnectSubscriptionItemRecord = ConnectSubscriptionItem::create([
+            "connected_subscription_id" => $ConnectSubscriptionRecord->id,
+            "stripe_id" => $subscription->items->data[0]->id,
+            "connected_product" => $subscription->items->data[0]->price->product,
+            "connected_price" => $subscription->items->data[0]->price->id,
+            "quantity" => $quantity
+        ]);
+
+        return $subscription;
 
     }
 

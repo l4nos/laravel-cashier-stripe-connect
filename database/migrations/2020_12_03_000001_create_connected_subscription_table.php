@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('stripe_status');
             $table->string('connected_price_id');
             $table->unsignedBigInteger('quantity');
-            $table->timestamp('trial_ends_at');
-            $table->timestamp('ends_at');
+            $table->timestamp('trial_ends_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
             $table->timestamps();
             $table->string('stripe_customer_id')->index();
             $table->string('stripe_account_Id')->index(); // FOR RELATING A CONNECTED CUSTOMER MODEL TO A CONNECTED ACCOUNT
