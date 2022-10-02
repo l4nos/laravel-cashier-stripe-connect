@@ -47,7 +47,7 @@ trait ConnectCustomer
             // A MODEL PROVIDED, LOOKUP ITS ACCOUNT ID
             $traits = class_uses($connectedAccount);
 
-            if(!in_array('Billable', $traits)){
+            if(!in_array('Lanos\CashierConnect\Billable', $traits)){
                 throw new Exception('This model does not have a connect Billable trait on.');
             }
 

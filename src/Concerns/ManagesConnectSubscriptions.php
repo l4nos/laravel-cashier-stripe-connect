@@ -66,7 +66,7 @@ trait ManagesConnectSubscriptions
         // IT IS A CUSTOMER TRAIT MODEL
         $traits = class_uses($customer);
 
-        if (!in_array('ConnectCustomer', $traits)) {
+        if (!in_array('Lanos\CashierConnect\ConnectCustomer', $traits)) {
             throw new Exception('This model does not have a connect ConnectCustomer trait on.');
         }
 
