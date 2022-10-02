@@ -28,7 +28,7 @@ trait ManagesConnectSubscriptions
      * @return Subscription
      */
 
-    public function createDirectSubscription($customer, $price, $data)
+    public function createDirectSubscription($customer, $price, $data = [])
     {
 
         return Subscription::create(
