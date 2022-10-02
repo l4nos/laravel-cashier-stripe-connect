@@ -44,7 +44,7 @@ trait CanCharge
             if ($this->commission_type === 'percentage') {
                 $options['application_fee_amount'] = $this->calculatePercentageFee($amount);
             } else {
-                $options['application_fee_amount'] = $amount;
+                $options['application_fee_amount'] = $this->commission_rate;
             }
         }
 
@@ -71,7 +71,7 @@ trait CanCharge
             if ($this->commission_type === 'percentage') {
                 $options['application_fee_amount'] = $this->calculatePercentageFee($amount);
             } else {
-                $options['application_fee_amount'] = $amount;
+                $options['application_fee_amount'] = $this->commission_rate;
             }
         }
 

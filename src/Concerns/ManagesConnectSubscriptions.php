@@ -31,6 +31,15 @@ trait ManagesConnectSubscriptions
     public function createDirectSubscription($customer, $price, $quantity = 1, $data = [])
     {
 
+        // APPLY PLATFORM FEE COMMISSION - SET THIS AGAINST THE MODEL
+        if (isset($this->commission_type) && isset($this->commission_rate)) {
+            if ($this->commission_type === 'percentage') {
+                $data['application_fee_percent'] = $this->commission_rate;
+            } else {
+                $data['application_fee_amount'] = $this->commission_rate;
+            }
+        }
+
         return Subscription::create(
             $data + [
                 "customer" => $this->determineCustomerInput($customer),
