@@ -35,7 +35,7 @@ trait ManagesConnectSubscriptions
             $data + [
                 "customer" => $this->determineCustomerInput($customer),
                 "expand" => "latest_invoice.payment_intent",
-                "items" => [['price' => $price]]
+                "items" => ['price' => $price]
             ], $this->stripeAccountOptions([], true));
 
     }
