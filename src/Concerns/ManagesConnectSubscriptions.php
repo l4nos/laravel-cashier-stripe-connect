@@ -28,24 +28,15 @@ trait ManagesConnectSubscriptions
      * @return Subscription
      */
 
-    public function createDirectSubscription($customer, $price, $data){
+    public function createDirectSubscription($customer, $price, $data)
+    {
 
-        if(gettype($customer) === 'string'){
-            $data['customer'] = $customer;
-        }else{
-            // IT IS A CUSTOMER TRAIT MODEL
-            $traits = class_uses($customer);
-
-            if(!in_array('ConnectCustomer', $traits)){
-                throw new Exception('This model does not have a connect ConnectCustomer trait on.');
-            }
-
-            $this->assetCustomerExists();
-
-            $data['customer'] = $customer->stripeCustomerId();
-        }
-
-        return Subscription::create($data, $this->stripeAccountOptions([], true));
+        return Subscription::create(
+            $data + [
+                "customer" => $this->determineCustomerInput($customer),
+                "expand" => "latest_invoice.payment_intent",
+                "transfer_data" => ['destination' => $this->stripeAccountId()]
+            ], $this->stripeAccountOptions([], true));
 
     }
 
@@ -58,6 +49,29 @@ trait ManagesConnectSubscriptions
     public function retrieveSubscription($id): Subscription
     {
         return Subscription::retrieve($id, $this->stripeAccountOptions([], true));
+    }
+
+    private function determineCustomerInput($customer)
+    {
+        if (gettype($customer) === 'string') {
+            return $customer;
+        } else {
+            return $this->handleConnectedCustomer($customer);
+        }
+    }
+
+    private function handleConnectedCustomer($customer)
+    {
+        // IT IS A CUSTOMER TRAIT MODEL
+        $traits = class_uses($customer);
+
+        if (!in_array('ConnectCustomer', $traits)) {
+            throw new Exception('This model does not have a connect ConnectCustomer trait on.');
+        }
+
+        $this->assetCustomerExists();
+
+        return $customer->stripeCustomerId();
     }
 
 
