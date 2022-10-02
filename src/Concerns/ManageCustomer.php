@@ -21,12 +21,6 @@ trait ManageCustomer
         return $this->belongsTo(ConnectCustomer::class, $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
     }
 
-    public function testit(){
-
-        return 'this is a test for the customer trait';
-
-    }
-
     /**
      * Retrieve the Stripe account ID.
      *

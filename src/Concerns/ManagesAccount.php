@@ -25,12 +25,6 @@ trait ManagesAccount
         return $this->belongsTo(ConnectMapping::class, $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
     }
 
-    public function testit(){
-
-        return 'this is a test for the account trait';
-
-    }
-
     /**
      * Updates and returns the updated requirements against the stripe API for the mapping
      * @return ConnectMapping
