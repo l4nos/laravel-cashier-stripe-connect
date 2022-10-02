@@ -70,7 +70,7 @@ trait ManagesConnectSubscriptions
             throw new Exception('This model does not have a connect ConnectCustomer trait on.');
         }
 
-        $this->assetCustomerExists();
+        $customer->assetCustomerExists();
 
         return $customer->stripeCustomerId();
     }
