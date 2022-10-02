@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Creates the Stripe Account columns for the user.
  */
-class CreateConnectedCustomerColumns extends Migration
+return new class extends Migration
 {
 
     /**
@@ -35,4 +35,4 @@ class CreateConnectedCustomerColumns extends Migration
     {
         Schema::dropIfExists('stripe_connected_customer_mappings');
     }
-}
+};

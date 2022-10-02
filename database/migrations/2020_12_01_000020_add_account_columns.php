@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Creates the Stripe Account columns for the user.
  */
-class AddAccountColumns extends Migration
+return new class extends Migration
 {
 
     /**
@@ -39,4 +39,4 @@ class AddAccountColumns extends Migration
             $table->dropColumn('requirements');
         });
     }
-}
+};

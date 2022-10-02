@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Creates the Stripe Account columns for the user.
  */
-class CreateConnectedSubscriptionTable extends Migration
+return new class extends Migration
 {
 
     /**
@@ -41,4 +41,4 @@ class CreateConnectedSubscriptionTable extends Migration
     {
         Schema::dropIfExists('connected_subscriptions');
     }
-}
+};
