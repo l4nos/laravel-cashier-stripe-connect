@@ -54,6 +54,7 @@ trait ManagesConnectSubscriptions
                 "expand" => ["latest_invoice.payment_intent"]
             ], $this->stripeAccountOptions([], true));
 
+        // TODO REWRITE TO USE RELATIONAL CREATION
         // GENERATE DATABASE RECORD FOR SUBSCRIPTION
         $ConnectSubscriptionRecord = ConnectSubscription::create([
             "name" => $name,
@@ -64,6 +65,7 @@ trait ManagesConnectSubscriptions
             "stripe_account_Id" => $this->stripeAccountId()
         ]);
 
+        // TODO REWRITE TO USE RELATIONAL CREATION
         $ConnectSubscriptionItemRecord = ConnectSubscriptionItem::create([
             "connected_subscription_id" => $ConnectSubscriptionRecord->id,
             "stripe_id" => $subscription->items->data[0]->id,
@@ -76,13 +78,17 @@ trait ManagesConnectSubscriptions
 
     }
 
+    public function getSubscriptions(){
+        return $this->stripeAccountMapping->subscriptions;
+    }
+
     /**
      * Retrieves a subscription object by its stripe subscription ID
      * @param $id
      * @return Subscription
      * @throws ApiErrorException
      */
-    public function retrieveSubscription($id): Subscription
+    public function retrieveSubscriptionFromStripe($id): Subscription
     {
         return Subscription::retrieve($id, $this->stripeAccountOptions([], true));
     }
