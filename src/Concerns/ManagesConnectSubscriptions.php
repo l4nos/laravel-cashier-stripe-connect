@@ -28,14 +28,14 @@ trait ManagesConnectSubscriptions
      * @return Subscription
      */
 
-    public function createDirectSubscription($customer, $price, $data = [])
+    public function createDirectSubscription($customer, $price, $quantity = 1, $data = [])
     {
 
         return Subscription::create(
             $data + [
                 "customer" => $this->determineCustomerInput($customer),
                 "items" => [
-                    ['price' => $price]
+                    ['price' => $price, "quantity" => $quantity]
                 ],
                 "payment_behavior" => "default_incomplete",
                 "expand" => ["latest_invoice.payment_intent"]
