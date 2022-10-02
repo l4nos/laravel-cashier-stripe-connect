@@ -34,8 +34,11 @@ trait ManagesConnectSubscriptions
         return Subscription::create(
             $data + [
                 "customer" => $this->determineCustomerInput($customer),
-                "expand" => "latest_invoice.payment_intent",
-                "items" => ['price' => $price]
+                "items" => [
+                    ['price' => $price]
+                ],
+                "payment_behavior" => "default_incomplete",
+                "expand" => ["latest_invoice.payment_intent"]
             ], $this->stripeAccountOptions([], true));
 
     }
