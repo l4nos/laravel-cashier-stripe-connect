@@ -3,6 +3,7 @@
 namespace Lanos\CashierConnect\Concerns;
 
 use Exception;
+use Illuminate\Support\Facades\Date;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Support\Str;
 use Lanos\CashierConnect\Models\ConnectSubscription;
@@ -61,7 +62,7 @@ trait ManagesConnectSubscriptions
             "stripe_id" => $subscription->id,
             "stripe_status" => $subscription->status,
             "connected_price_id" => $price,
-            "ends_at" => $subscription->billing_cycle_anchor,
+            "ends_at" => Date::parse($subscription->current_period_end),
             "stripe_customer_id" => $customerID,
             "stripe_account_Id" => $this->stripeAccountId()
         ]);
