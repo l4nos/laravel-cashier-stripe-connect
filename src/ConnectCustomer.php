@@ -76,7 +76,7 @@ trait ConnectCustomer
      * @return void
      * @throws AccountNotFoundException
      */
-    protected function assetCustomerExists(): void
+    public function assetCustomerExists(): void
     {
         if (! $this->hasCustomerRecord()) {
             throw new AccountNotFoundException('Stripe customer does not exist.');
