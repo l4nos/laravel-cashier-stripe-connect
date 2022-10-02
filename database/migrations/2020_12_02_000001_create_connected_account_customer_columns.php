@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Creates the Stripe Account columns for the user.
  */
-class CreateCustomerColumns extends Migration
+class CreateConnectedCustomerColumns extends Migration
 {
 
     /**
