@@ -61,6 +61,7 @@ trait ManagesConnectSubscriptions
             "stripe_id" => $subscription->id,
             "stripe_status" => $subscription->status,
             "connected_price_id" => $price,
+            "ends_at" => $subscription->billing_cycle_anchor,
             "stripe_customer_id" => $customerID,
             "stripe_account_Id" => $this->stripeAccountId()
         ]);
