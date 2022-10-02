@@ -3,7 +3,7 @@
 namespace Lanos\CashierConnect\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
-use Lanos\CashierConnect\ConnectCustomer;
+use Lanos\CashierConnect\Models\ConnectCustomer;
 use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Lanos\CashierConnect\Models\ConnectMapping;
