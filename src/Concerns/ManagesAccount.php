@@ -33,11 +33,20 @@ trait ManagesAccount
 
         $account = $this->asStripeAccount();
 
+        $onboarded = [];
+
+        // IF ITS COMPLETED FIRST TIME
+        if(!$this->stripeAccountMapping->charges_enabled && $account->charges_enabled){
+            $onboarded = [
+                "first_onboarding_done" => 1
+            ];
+        }
+
         $mapping = $this->stripeAccountMapping()->update([
             "future_requirements" => $account->future_requirements->toArray(),
             "requirements" => $account->requirements->toArray(),
             "charges_enabled" => $account->charges_enabled
-        ]);
+        ] + $onboarded);
 
         $this->refresh();
 
