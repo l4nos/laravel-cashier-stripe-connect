@@ -6,12 +6,11 @@
 
 This package is designed to seamlessly connect all of your eloquent models, mapping them to the relevant stripe entities in order to make a marketplace or payments platform.
 
-> ### Coming Soon
-> - Connect webhook(s)
-
 ## Documentation
 
 We now have a dedicated docs page for this plugin. You can view it [here](https://updev-1.gitbook.io/cashier-for-connect/).
+
+We now roughly support webhooks (Due to flexible nature of connect, you will need to declare handlers yourself) - Follow our guide!
 
 ## License
 
