@@ -1,6 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Lanos\CashierConnect\Controllers;
+use Lanos\CashierConnect\Http\Controllers;
 
-Route::post('/connectWebhook', [\Lanos\CashierConnect\Http\Controllers\WebhookController::class, 'handleWebhook'])->name('stripeConnect.webhook');
+Route::post('/connectWebhook', [Controllers\WebhookController::class, 'handleWebhook'])->name('stripeConnect.webhook');
