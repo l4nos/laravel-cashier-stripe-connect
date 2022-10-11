@@ -72,7 +72,7 @@ trait Billable
             return $this->defaultCurrency;
         }
 
-        return "USD";
+        return config('cashierconnect.currency');
 
     }
 

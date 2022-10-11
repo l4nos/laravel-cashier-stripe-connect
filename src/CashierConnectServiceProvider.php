@@ -2,8 +2,8 @@
 
 namespace Lanos\CashierConnect;
 
-
 use Illuminate\Support\ServiceProvider;
+use Lanos\CashierConnect\Console\ConnectWebhook;
 use Laravel\Cashier\Cashier;
 
 /**
@@ -21,8 +21,18 @@ class CashierConnectServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerMigrations();
-        $this->registerPublishing();
+        $this->initializeMigrations();
+        $this->initializePublishing();
+        $this->initializeCommands();
+        $this->setupRoutes();
+        $this->setupConfig();
+    }
+
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/cashierconnect.php', 'cashierconnect'
+        );
     }
 
     /**
@@ -30,7 +40,7 @@ class CashierConnectServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerMigrations()
+    protected function initializeMigrations()
     {
         if (Cashier::$runsMigrations && $this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -42,7 +52,7 @@ class CashierConnectServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerPublishing()
+    protected function initializePublishing()
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -52,6 +62,43 @@ class CashierConnectServiceProvider extends ServiceProvider
                 __DIR__.'/../database/migrations' => $this->app->databasePath('migrations/tenant'),
             ], 'cashier-connect-tenancy-migrations');
         }
+    }
+
+    /**
+     * Register the package's console commands.
+     *
+     * @return void
+     */
+    protected function initializeCommands()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                ConnectWebhook::class
+            ]);
+        }
+    }
+
+    /**
+     * Register the package's console commands.
+     *
+     * @return void
+     */
+    protected function setupRoutes()
+    {
+        $this->loadRoutesFrom(__DIR__.'/../routes/webhook.php');
+
+    }
+
+    /**
+     * Register the package's config.
+     *
+     * @return void
+     */
+    protected function setupConfig()
+    {
+        $this->publishes([
+            __DIR__.'/../config/cashierconnect.php' => config_path('cashierconnect.php'),
+        ]);
     }
 
 }
