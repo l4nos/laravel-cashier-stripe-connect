@@ -48,6 +48,7 @@ trait CanCharge
             }
         }
 
+
         return PaymentIntent::create($options, $this->stripeAccountOptions([],true));
 
     }
