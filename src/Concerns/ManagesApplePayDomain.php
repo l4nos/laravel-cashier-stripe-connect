@@ -19,15 +19,14 @@ trait ManagesApplePayDomain
 {
 
     public function addApplePayDomain($domain){
-
+        $this->assertAccountExists();
         return ApplePayDomain::create(['domain_name' => $domain], $this->stripeAccountOptions([], true));
 
     }
 
-    public function getApplePayDomains($domain){
-
+    public function getApplePayDomains(){
+        $this->assertAccountExists();
         return ApplePayDomain::all([], $this->stripeAccountOptions([], true));
-
     }
 
 }
