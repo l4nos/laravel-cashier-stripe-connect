@@ -34,6 +34,7 @@ trait Billable
     use ManagesConnectProducts;
     use CanCharge;
     use ManagesPayout;
+    use ManagesApplePayDomain;
 
     /**
      * The default Stripe API options for the current Billable model.
