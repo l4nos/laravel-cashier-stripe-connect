@@ -4,7 +4,7 @@
 	"keywords": ["laravel", "stripe", "stripe-connect", "billing"],
     "type": "library",
     "require": {
-        "laravel/cashier": "^12.6|^13.4",
+        "laravel/cashier": "^12.6|^13.4|^14.0",
         "illuminate/console": "^8.37|^9.0",
         "illuminate/contracts": "^8.37|^9.0",
         "illuminate/database": "^8.37|^9.0",
