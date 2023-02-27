@@ -84,9 +84,9 @@ trait ManagesAccount
     }
 
     /**
-     * @return int
+     * @return int|string
      */
-    public function getModelID(): int
+    public function getModelID(): int|string
     {
         return $this->{$this->primaryKey};
     }
