@@ -247,7 +247,17 @@ trait ManagesAccount
     {
         $this->assertAccountExists();
 
-        return Account::update($this->stripeAccountId(), $options, $this->stripeAccountOptions());
+        $accountUpdate = Account::update($this->stripeAccountId(), $options, $this->stripeAccountOptions());
+
+        // UPDATE ANY FLAGS OR REQUIREMENTS
+        // TODO ADD PAYOUTS ENABLED FLAG
+        $mapping = $this->stripeAccountMapping()->update([
+                "future_requirements" => $accountUpdate->future_requirements->toArray(),
+                "requirements" => $accountUpdate->requirements->toArray(),
+                "charges_enabled" => $accountUpdate->charges_enabled
+        ]);
+
+        return $accountUpdate;
     }
 
     private function getLocalIDField(){
