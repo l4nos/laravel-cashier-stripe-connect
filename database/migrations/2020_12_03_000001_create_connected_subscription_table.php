@@ -28,7 +28,7 @@ return new class extends Migration
             $table->timestamp('ends_at')->nullable();
             $table->timestamps();
             $table->string('stripe_customer_id')->index();
-            $table->string('stripe_account_Id')->index()->nullable(); // FOR RELATING A CONNECTED CUSTOMER MODEL TO A CONNECTED ACCOUNT
+            $table->string('stripe_account_id')->index()->nullable(); // FOR RELATING A CONNECTED CUSTOMER MODEL TO A CONNECTED ACCOUNT
         });
     }
 
