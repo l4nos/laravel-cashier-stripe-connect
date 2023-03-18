@@ -64,7 +64,7 @@ trait ManagesConnectSubscriptions
             "connected_price_id" => $price,
             "ends_at" => Date::parse($subscription->current_period_end),
             "stripe_customer_id" => $customerID,
-            "stripe_account_Id" => $this->stripeAccountId()
+            "stripe_account_id" => $this->stripeAccountId()
         ]);
 
         // TODO REWRITE TO USE RELATIONAL CREATION

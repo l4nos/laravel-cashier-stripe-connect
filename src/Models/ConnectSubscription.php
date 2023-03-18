@@ -25,7 +25,7 @@ class ConnectSubscription extends Model
      * @throws ApiErrorException
      */
     public function asStripeSubscription(){
-        return Subscription::retrieve($this->stripe_id, $this->stripeAccountOptions([], $this->stripe_account_Id));
+        return Subscription::retrieve($this->stripe_id, $this->stripeAccountOptions([], $this->stripe_account_id));
     }
 
 }

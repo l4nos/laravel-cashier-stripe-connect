@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('model_id')->nullable()->index();;
             $table->uuid('model_uuid')->nullable()->index();
             $table->string('stripe_customer_id')->index();
-            $table->string('stripe_account_Id')->index(); // FOR RELATING A CONNECTED CUSTOMER MODEL TO A CONNECTED ACCOUNT
+            $table->string('stripe_account_id')->index(); // FOR RELATING A CONNECTED CUSTOMER MODEL TO A CONNECTED ACCOUNT
         });
     }
 

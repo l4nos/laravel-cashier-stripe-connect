@@ -53,7 +53,7 @@ trait CanCharge
 
     }
 
-    public function createDestinationCharge(int $amount, string $currencyToUse = null, array $options = []): PaymentIntent
+    public function createDestinationCharge(int $amount, string $currencyToUse = null, array $options = [], bool $onBehalfOf = false): PaymentIntent
     {
 
         $this->assertAccountExists();
@@ -66,6 +66,10 @@ trait CanCharge
             ],
             'currency' => Str::lower($this->establishTransferCurrency($currencyToUse)),
         ], $options);
+
+        if($onBehalfOf){
+            $options['on_behalf_of'] = $this->stripeAccountId();
+        }
 
         // APPLY PLATFORM FEE COMMISSION - SET THIS AGAINST THE MODEL
         if (isset($this->commission_type) && isset($this->commission_rate)) {
