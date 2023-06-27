@@ -54,7 +54,7 @@ trait ConnectCustomer
             if ($connectedAccount->hasStripeAccount()) {
                 $options['stripe_account'] = $connectedAccount->stripeAccountId();
             }else{
-                throw new AccountNotFoundException('The '.class_basename($connectedAccount).' model does not have the connect Billable trait.');
+                throw new AccountNotFoundException('The '.class_basename($connectedAccount).' model does not have a Stripe Account.');
             }
         }
 
