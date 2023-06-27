@@ -48,13 +48,13 @@ trait ConnectCustomer
             $traits = class_uses($connectedAccount);
 
             if(!in_array('Lanos\CashierConnect\Billable', $traits)){
-                throw new Exception('The '.class_basename(static::class).' model does not have the connect Billable trait.');
+                throw new Exception('The '.class_basename($connectedAccount).' model does not have the connect Billable trait.');
             }
 
             if ($connectedAccount->hasStripeAccount()) {
                 $options['stripe_account'] = $connectedAccount->stripeAccountId();
             }else{
-                throw new AccountNotFoundException('The '.class_basename(static::class).' model does not have the connect Billable trait.');
+                throw new AccountNotFoundException('The '.class_basename($connectedAccount).' model does not have the connect Billable trait.');
             }
         }
 

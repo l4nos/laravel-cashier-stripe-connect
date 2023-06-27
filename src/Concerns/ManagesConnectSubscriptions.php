@@ -110,7 +110,7 @@ trait ManagesConnectSubscriptions
         $traits = class_uses($customer);
 
         if (!in_array('Lanos\CashierConnect\ConnectCustomer', $traits)) {
-            throw new Exception('The '.class_basename(static::class).' model does not have the connect ConnectCustomer trait.');
+            throw new Exception('The '.class_basename($customer).' model does not have the connect ConnectCustomer trait.');
         }
 
         $customer->assetCustomerExists();
