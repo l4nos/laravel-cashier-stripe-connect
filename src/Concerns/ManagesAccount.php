@@ -5,7 +5,7 @@ namespace Lanos\CashierConnect\Concerns;
 
 use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
-Lanos\CashierConnect\Contracts\ConnectMappingContract;
+use Lanos\CashierConnect\Contracts\ConnectMappingContract;
 use Stripe\Account;
 use Stripe\Exception\ApiErrorException;
 
