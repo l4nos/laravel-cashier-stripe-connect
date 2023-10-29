@@ -17,7 +17,7 @@ trait ManageCustomer
      */
     public function stripeCustomerMapping()
     {
-        return $this->belongsTo(config('cashierconnect.connect_customer'), $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
+        return $this->belongsTo(config('cashierconnect.models.connect_customer'), $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
     }
 
     /**
@@ -88,7 +88,7 @@ trait ManageCustomer
      */
     private function retrieveHostConnectedAccount(): Model{
 
-        $connectedAccount = config('cashierconnect.connect_mapping')::where([
+        $connectedAccount = config('cashierconnect.models.connect_mapping')::where([
             ['stripe_account_id', '=', $this->stripeAccountId()]
         ])->first();
 

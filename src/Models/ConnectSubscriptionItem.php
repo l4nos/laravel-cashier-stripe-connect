@@ -12,7 +12,7 @@ class ConnectSubscriptionItem extends Model implements ConnectSubscriptionContra
     protected $table = 'connected_subscription_items';
 
     public function subscription(){
-        return $this->belongsTo(config('cashierconnect.connect_subscription'), 'connected_subscription_id', 'id');
+        return $this->belongsTo(config('cashierconnect.models.connect_subscription'), 'connected_subscription_id', 'id');
     }
 
 }

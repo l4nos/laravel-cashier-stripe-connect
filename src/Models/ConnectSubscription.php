@@ -17,7 +17,7 @@ class ConnectSubscription extends Model implements ConnectSubscriptionContract
     protected $table = 'connected_subscriptions';
 
     public function items(){
-        return $this->hasMany(config('cashierconnect.connect_subscription_item'), 'connected_subscription_id', 'id');
+        return $this->hasMany(config('cashierconnect.models.connect_subscription_item'), 'connected_subscription_id', 'id');
     }
 
     /**

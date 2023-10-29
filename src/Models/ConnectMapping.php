@@ -23,7 +23,7 @@ class ConnectMapping extends Model implements ConnectMappingContract
     protected $table = 'stripe_connect_mappings';
 
     public function subscriptions(){
-        return $this->hasMany(config('cashierconnect.connect_subscription'), 'stripe_account_id', 'stripe_account_id');
+        return $this->hasMany(config('cashierconnect.models.connect_subscription'), 'stripe_account_id', 'stripe_account_id');
     }
 
 }

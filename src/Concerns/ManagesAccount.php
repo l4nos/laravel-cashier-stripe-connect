@@ -22,7 +22,7 @@ trait ManagesAccount
      */
     public function stripeAccountMapping()
     {
-        return $this->belongsTo(config('cashierconnect.connect_mapping'), $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
+        return $this->belongsTo(config('cashierconnect.models.connect_mapping'), $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
     }
 
     /**

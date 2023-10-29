@@ -55,7 +55,7 @@ trait ManagesConnectSubscriptions
 
         // TODO REWRITE TO USE RELATIONAL CREATION
         // GENERATE DATABASE RECORD FOR SUBSCRIPTION
-        $ConnectSubscriptionRecord = config('cashierconnect.connect_subscription')::create([
+        $ConnectSubscriptionRecord = config('cashierconnect.models.connect_subscription')::create([
             "name" => $name,
             "stripe_id" => $subscription->id,
             "stripe_status" => $subscription->status,
@@ -66,7 +66,7 @@ trait ManagesConnectSubscriptions
         ]);
 
         // TODO REWRITE TO USE RELATIONAL CREATION
-        $ConnectSubscriptionItemRecord = config('cashierconnect.connect_subscription_item')::create([
+        $ConnectSubscriptionItemRecord = config('cashierconnect.models.connect_subscription_item')::create([
             "connected_subscription_id" => $ConnectSubscriptionRecord->id,
             "stripe_id" => $subscription->items->data[0]->id,
             "connected_product" => $subscription->items->data[0]->price->product,
@@ -107,7 +107,7 @@ trait ManagesConnectSubscriptions
         // IT IS A CUSTOMER TRAIT MODEL
         $traits = class_uses($customer);
 
-        if (!in_array(config('cashierconnect.connect_customer'), $traits)) {
+        if (!in_array(config('cashierconnect.models.connect_customer'), $traits)) {
             throw new Exception('This model does not have a connect ConnectCustomer trait on.');
         }
 
