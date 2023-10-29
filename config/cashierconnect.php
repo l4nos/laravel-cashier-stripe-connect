@@ -15,7 +15,7 @@ return [
         'connect_mapping' => ConnectMapping::class,
         'connect_customer' => ConnectCustomer::class,
         'test_model' => TestModel::class,
-    ]
+    ],
 
     'webhook' => [
         'secret' => env('CONNECT_WEBHOOK_SECRET'),
