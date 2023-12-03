@@ -4,22 +4,14 @@ declare(strict_types=1);
 
 namespace Lanos\CashierConnect\Tests;
 
-abstract class TestCase extends \PHPUnit\Framework\TestCase
-{
-    use CreatesApplication;
-    
-    protected $app;
+use Illuminate\Support\Facades\Config;
 
-    /**
-     * Setup the test environment.
-     */
+abstract class TestCase extends \Orchestra\Testbench\TestCase
+{
     protected function setUp(): void
     {
         parent::setUp();
         
-        $this->app = $this->createApplication();
-    
-        // Set config for testing
-        $this->app['config']->set('cashierconnect.secret', 'sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+        Config::set('cashierconnect.webhook.secret', 'whsec_test_secret');
     }
 }
