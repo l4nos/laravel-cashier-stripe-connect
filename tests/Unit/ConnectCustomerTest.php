@@ -13,6 +13,12 @@ class ConnectCustomerTest extends TestCase
 {
     use ConnectCustomer;
     
+    /**
+     * Test that the Stripe account options are returned according to the model passed.
+     *
+     * @return void
+     * @throws Exception
+     */
     public function testStripeAccountOptions()
     {
         $result = $this->stripeAccountOptions('acct_1GqjPqJ0jDXjQzKl');

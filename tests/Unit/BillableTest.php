@@ -13,6 +13,10 @@ class BillableTest extends TestCase
     
     public $defaultCurrency = 'gbp';
     
+    /**
+     * Test that the Stripe account options are returned.
+     * @return void
+     */
     public function testStripeAccountOptions()
     {
         $result = $this->stripeAccountOptions([
@@ -20,9 +24,14 @@ class BillableTest extends TestCase
         ], true);
         
         $this->assertArrayHasKey('stripe_account', $result);
+        $this->assertSame('acct_1GqjPqJ0jDXjQzKl', $result['stripe_account']);
         // TODO test workarounds for Cashier 12.x
     }
     
+    /**
+     * Test that the default currency is returned if no Stripe account is set.
+     * @return void
+     */
     public function testEstablishTransformedStripeAccount()
     {
         $currency = 'mxn';
