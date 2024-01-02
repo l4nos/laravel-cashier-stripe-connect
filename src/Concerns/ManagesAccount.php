@@ -100,7 +100,7 @@ trait ManagesAccount
     protected function assertAccountExists(): void
     {
         if (! $this->hasStripeAccount()) {
-            throw new AccountNotFoundException('Stripe account does not exist.');
+            throw new AccountNotFoundException('Stripe account does not exist for '.class_basename(static::class).' model');
         }
     }
 

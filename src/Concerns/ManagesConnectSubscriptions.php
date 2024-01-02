@@ -108,7 +108,7 @@ trait ManagesConnectSubscriptions
         $traits = class_uses($customer);
 
         if (!in_array(config('cashierconnect.models.connect_customer'), $traits)) {
-            throw new Exception('This model does not have a connect ConnectCustomer trait on.');
+            throw new Exception('The '.class_basename($customer).' model does not have the connect ConnectCustomer trait.');
         }
 
         $customer->assetCustomerExists();
