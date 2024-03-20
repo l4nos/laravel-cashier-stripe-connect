@@ -2,6 +2,8 @@
 	Cashier For Connect
 </h1>
 
+# LARAVEL 10 + 11 SUPPORT COMING NEXT WEEK - + CASHIER AND STRIPE API LATEST VERSION
+
  ## Intro
 
 This package is designed to seamlessly connect all of your eloquent models, mapping them to the relevant stripe entities in order to make a marketplace or payments platform.
