@@ -21,7 +21,6 @@ class CashierConnectServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->initializeMigrations();
         $this->initializePublishing();
         $this->initializeCommands();
         $this->setupRoutes();
@@ -33,18 +32,6 @@ class CashierConnectServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../config/cashierconnect.php', 'cashierconnect'
         );
-    }
-
-    /**
-     * Register the package migrations.
-     *
-     * @return void
-     */
-    protected function initializeMigrations()
-    {
-        if (Cashier::$runsMigrations && $this->app->runningInConsole()) {
-            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        }
     }
 
     /**

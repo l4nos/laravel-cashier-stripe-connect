@@ -65,7 +65,7 @@ trait ManageCustomer
             throw new AccountAlreadyExistsException('Customer account already exists.');
         }
 
-        $customer = Customer::create($customerData, $this->stripeAccountOptions($connectedAccount));
+        $customer = ConnectCustomer::create($customerData, $this->stripeAccountOptions($connectedAccount));
 
         // Save the id.
         $this->stripeCustomerMapping()->create([
