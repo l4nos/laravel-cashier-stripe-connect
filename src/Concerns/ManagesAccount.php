@@ -5,7 +5,7 @@ namespace Lanos\CashierConnect\Concerns;
 
 use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
-use Lanos\CashierConnect\Models\ConnectMapping;
+use Lanos\CashierConnect\Contracts\ConnectMappingContract;
 use Stripe\Account;
 use Stripe\Exception\ApiErrorException;
 
@@ -22,12 +22,12 @@ trait ManagesAccount
      */
     public function stripeAccountMapping()
     {
-        return $this->belongsTo(ConnectMapping::class, $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
+        return $this->belongsTo(config('cashierconnect.models.connect_mapping'), $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
     }
 
     /**
      * Updates and returns the updated requirements against the stripe API for the mapping
-     * @return ConnectMapping
+     * @return ConnectMappingContract (ConnectMapping)
      */
     public function updateStripeStatus(){
 
