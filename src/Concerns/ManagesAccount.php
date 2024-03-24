@@ -262,7 +262,7 @@ trait ManagesAccount
 
     private function getLocalIDField(){
 
-        if($this->incrementing){
+        if($this->getIncrementing()){
             return 'model_id';
         }else{
             return 'model_uuid';

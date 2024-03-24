@@ -2,9 +2,14 @@
 	Cashier For Connect
 </h1>
 
-# LARAVEL 10 + 11 SUPPORT COMING NEXT WEEK - + CASHIER AND STRIPE API LATEST VERSION
+## Cashier 15 Update Notes
+The Cashier 15 update brought about a few changes to the package. These include:
 
- ## Intro
+- Migrations no longer auto publish, you must now publish them using the command stated in the GitBook readme.
+  - Any use of ignoreMigrations() in your code can be and should be safely removed
+- Stripe API Version is now 2023-10-16, changes have been made to accommodate this
+
+## Intro
 
 This package is designed to seamlessly connect all of your eloquent models, mapping them to the relevant stripe entities in order to make a marketplace or payments platform.
 
