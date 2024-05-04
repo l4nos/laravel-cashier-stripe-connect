@@ -74,9 +74,9 @@ trait CanCharge
         // APPLY PLATFORM FEE COMMISSION - SET THIS AGAINST THE MODEL
         if (isset($this->commission_type) && isset($this->commission_rate)) {
             if ($this->commission_type === 'percentage') {
-                $options['application_fee_amount'] = round($this->calculatePercentageFee($amount),2);
+                $options['application_fee_amount'] = ceil($this->calculatePercentageFee($amount));
             } else {
-                $options['application_fee_amount'] = round($this->commission_rate ,2);
+                $options['application_fee_amount'] = ceil($this->commission_rate);
             }
         }
 
