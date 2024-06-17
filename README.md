@@ -9,7 +9,7 @@ Working on open source packages and helping other developers is my true passion,
 
 ### Documentation has been updated to cover the new features introduced in 1.2.2.
 
-## V1.2.2 Update
+## V1.2.3 Update
 This update bring new functionality for users wishing to use payment links with their connected accounts:
 - Create both Direct and Destination payment links, including using "on behalf of".
 - Utilise both percentage and fixed application fees on payment links
