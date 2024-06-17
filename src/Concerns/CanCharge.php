@@ -53,6 +53,15 @@ trait CanCharge
 
     }
 
+    /**
+     * @param int $amount
+     * @param string|null $currencyToUse
+     * @param array $options
+     * @param bool $onBehalfOf
+     * @return PaymentIntent
+     * @throws AccountNotFoundException
+     * @throws ApiErrorException
+     */
     public function createDestinationCharge(int $amount, string $currencyToUse = null, array $options = [], bool $onBehalfOf = false): PaymentIntent
     {
 
@@ -85,7 +94,11 @@ trait CanCharge
     }
 
 
-
+    /**
+     * @param $amount
+     * @return float|int
+     * @throws \Exception
+     */
     private function calculatePercentageFee($amount){
         if($this->commission_rate < 100){
             return ($this->commission_rate / 100) * $amount;
