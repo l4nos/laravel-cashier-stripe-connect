@@ -7,6 +7,15 @@ Working on open source packages and helping other developers is my true passion,
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E0ZF7W0)
 
+## V1.2.1 Update
+This update bring new functionality for users wishing to use payment links with their connected accounts:
+- Create both Direct and Destination payment links, including using "on behalf of".
+- Utilise both percentage and fixed application fees on payment links
+- Retrieve all direct payment links for a connected account
+  - Note: It's difficult and impractical to retrieve all destination payment links as they are currently not filterable by connected account directly on the Stripe API, i've requested they add this in, if they do i'll update the plugin. Until then if you want to store and return them to your users, you need to store a copy locally on your application database.
+  
+The documentation has yet to be updated to cover this, but if you look in the ManagesPaymentLinks.php that will have everything in there.
+
 ## V1.2.0 Update
 This update bring new functionality for users wishing to use both physical terminals and the new Apple/Android tap to pay functionality. It will facilitate the use of:
 - Adding terminal locations
