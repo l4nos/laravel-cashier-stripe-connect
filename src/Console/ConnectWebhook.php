@@ -35,7 +35,7 @@ class ConnectWebhook extends Command
         $webhookEndpoints = Cashier::stripe()->webhookEndpoints;
 
         $endpoint = $webhookEndpoints->create([
-            'enabled_events' => config('cashierconnect.events'),
+            'enabled_events' => config('cashierconnect.models.events'),
             'url' => $this->option('url') ?? route('stripeConnect.webhook'),
             'api_version' => $this->option('api-version') ?? Cashier::STRIPE_VERSION,
             'connect' => true
