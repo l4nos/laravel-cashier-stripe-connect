@@ -80,7 +80,7 @@ trait ManagesPaymentLinks
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function getAllDirectPaymentLinks(){
+    public function getAllDirectPaymentLinks(): Collection{
         $this->assertAccountExists();
         return PaymentLink::all([], $this->stripeAccountOptions([], true));
     }
@@ -94,7 +94,7 @@ trait ManagesPaymentLinks
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function getSingleDesinationPaymentLink($id){
+    public function getSingleDestinationPaymentLink($id): PaymentLink{
         $this->assertAccountExists();
         return PaymentLink::retrieve($id, $this->stripeAccountOptions([], false));
     }
@@ -106,7 +106,7 @@ trait ManagesPaymentLinks
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function updateDirectPaymentLink($id, $data){
+    public function updateDirectPaymentLink($id, $data): PaymentLink{
         $this->assertAccountExists();
         return PaymentLink::update($id, $data, $this->stripeAccountOptions([], true));
     }
@@ -118,7 +118,7 @@ trait ManagesPaymentLinks
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function updateDestinationPaymentLink($id, $data){
+    public function updateDestinationPaymentLink($id, $data): PaymentLink{
         $this->assertAccountExists();
         return PaymentLink::update($id, $data, $this->stripeAccountOptions([], false));
     }
