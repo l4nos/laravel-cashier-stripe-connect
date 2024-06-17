@@ -2,7 +2,19 @@
 	Cashier For Connect
 </h1>
 
-## Cashier 15 Update Notes
+### Help me to keep helping you.
+Working on open source packages and helping other developers is my true passion, unfortunately I have to work in order to pay bills. The more people that help me out, the more time I can spend building cool packages and supporting developers. It doesn't have to be much, just a cup of coffee's worth. It's all appreciaited!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E0ZF7W0)
+
+## V1.2.0 Update
+This update bring new functionality for users wishing to use both physical terminals and the new Apple/Android tap to pay functionality. It will facilitate the use of:
+- Adding terminal locations
+- Adding a reader and associating it with a terminal
+- Handling connection token requests
+The documentation has yet to be updated to cover this, but if you look in the ManagesCustomerTerminals.php that will have everything in there.
+
+## V1.1.0 Update (Cashier 15)
 The Cashier 15 update brought about a few changes to the package. These include:
 
 - Migrations no longer auto publish, you must now publish them using the command stated in the GitBook readme.
