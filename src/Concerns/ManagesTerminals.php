@@ -18,58 +18,66 @@ trait ManagesTerminals
 {
 
     /**
-     * @param $data
+     * @param array $data
+     * @param bool $direct
      * @return Location
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function addTerminalLocation($data){
+    public function addTerminalLocation(array $data, bool $direct = false): Location{
         $this->assertAccountExists();
-        return Location::create($data, $this->stripeAccountOptions([], true));
+        return Location::create($data, $this->stripeAccountOptions([], $direct));
     }
 
     /**
+     * @param array $params
+     * @param bool $direct
      * @return Collection
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function getTerminalLocations(){
+    public function getTerminalLocations(array $params, bool $direct = false): Collection{
         $this->assertAccountExists();
-        return Location::all([], $this->stripeAccountOptions([], true));
+        return Location::all($params, $this->stripeAccountOptions([], $direct));
     }
 
+
     /**
-     * @param $data
+     * @param array $data
+     * @param bool $direct
      * @return Reader
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function registerTerminalReader($data){
+    public function registerTerminalReader(array $data, bool $direct = false): Reader{
         $this->assertAccountExists();
-        return Reader::create($data, $this->stripeAccountOptions([], true));
+        return Reader::create($data, $this->stripeAccountOptions([], $direct));
     }
 
     /**
+     * @param array $params
+     * @param bool $direct
      * @return Collection
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function getTerminalReaders(){
+    public function getTerminalReaders(array $params = [], bool $direct = false): Collection{
         $this->assertAccountExists();
-        return Reader::all([], $this->stripeAccountOptions([], true));
+        return Reader::all($params, $this->stripeAccountOptions([], $direct));
     }
 
     /**
-     * @param $location
+     * @param string $location
+     * @param bool $direct
      * @return ConnectionToken
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function createConnectionToken($location){
+    public function createConnectionToken(string $location, bool $direct = false): ConnectionToken{
         $this->assertAccountExists();
         return ConnectionToken::create([
             "location" => $location
-        ], $this->stripeAccountOptions([], true));
+        ], $this->stripeAccountOptions([], $direct));
     }
 
 }
