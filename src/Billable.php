@@ -10,6 +10,7 @@ use Lanos\CashierConnect\Concerns\ManagesBalance;
 use Lanos\CashierConnect\Concerns\ManagesConnectCustomer;
 use Lanos\CashierConnect\Concerns\ManagesConnectProducts;
 use Lanos\CashierConnect\Concerns\ManagesConnectSubscriptions;
+use Lanos\CashierConnect\Concerns\ManagesPaymentLinks;
 use Lanos\CashierConnect\Concerns\ManagesPerson;
 use Lanos\CashierConnect\Concerns\ManagesPayout;
 use Lanos\CashierConnect\Concerns\ManagesTerminals;
@@ -29,6 +30,7 @@ trait Billable
     use ManagesPerson;
     use ManagesBalance;
     use ManagesTransfer;
+    use ManagesPaymentLinks;
     use ManagesConnectCustomer;
     use ManagesConnectSubscriptions;
     use ManagesConnectProducts;
