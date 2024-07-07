@@ -2,10 +2,8 @@
 	Cashier For Connect
 </h1>
 
-### Help me to keep helping you.
-Working on open source packages and helping other developers is my true passion, unfortunately I have to work in order to pay bills. The more people that help me out, the more time I can spend building cool packages and supporting developers. It doesn't have to be much, just a cup of coffee's worth. It's all appreciated!
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E0ZF7W0)
+### Reason for fork
+This package was forked in order to support multiple Connected Customers per Customer Model. If for example users are your customer, you may want one user to be a customer of multiple different vendors. This was not possible in the other repo; hence, the fork.
 
 ### Documentation has been updated to cover the new features introduced in 1.2.2.
 
