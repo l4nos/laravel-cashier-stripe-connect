@@ -13,7 +13,6 @@ use Stripe\Exception\ApiErrorException;
 
 trait ManageCustomer
 {
-
     /**
      * @return mixed
      */
@@ -37,7 +36,7 @@ trait ManageCustomer
      *
      * @return string|null
      */
-    public function stripeCustomerId($connectedAccount = null): ?string
+    public function stripeCustomerId(?ConnectMapping $connectedAccount = null): ?string
     {
         return $this->stripeCustomerMapping->stripe_customer_id;
     }
@@ -46,7 +45,7 @@ trait ManageCustomer
      * Checks if the model exists as a stripe customer
      * @return mixed
      */
-    public function hasCustomerRecord($connectedAccount): bool
+    public function hasCustomerRecord(ConnectMapping $connectedAccount): bool
     {
         $query = $this->stripeCustomerMapping();
 
@@ -66,7 +65,7 @@ trait ManageCustomer
      * @throws AccountAlreadyExistsException
      * @throws AccountNotFoundException
      */
-    public function createStripeCustomer($connectedAccount, array $customerData = []): Customer
+    public function createStripeCustomer(ConnectMapping $connectedAccount, array $customerData = []): Customer
     {
         // Check if model already has a connected Stripe account.
         if ($this->hasCustomerRecord($connectedAccount)) {
@@ -103,7 +102,7 @@ trait ManageCustomer
         if (!$connectedAccount) {
             throw new AccountNotFoundException('Connected account not found.');
         }
-        
+
         $model = $connectedAccount->model;
 
         $modelId = $this->getHostIDField($connectedAccount);
@@ -159,5 +158,4 @@ trait ManageCustomer
         }
 
     }
-
 }

@@ -3,6 +3,7 @@
 
 namespace Lanos\CashierConnect\Concerns;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Lanos\CashierConnect\Models\ConnectMapping;
@@ -20,7 +21,7 @@ trait ManagesAccount
     /**
      * @return mixed
      */
-    public function stripeAccountMapping()
+    public function stripeAccountMapping(): BelongsTo
     {
         return $this->belongsTo(ConnectMapping::class, $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
     }
@@ -29,8 +30,8 @@ trait ManagesAccount
      * Updates and returns the updated requirements against the stripe API for the mapping
      * @return ConnectMapping
      */
-    public function updateStripeStatus(){
-
+    public function updateStripeStatus()
+    {
         $account = $this->asStripeAccount();
 
         $onboarded = [];
@@ -123,7 +124,7 @@ trait ManagesAccount
      * @return bool
      * @throws AccountNotFoundException|ApiErrorException
      */
-    public function hasCompletedOnboarding()
+    public function hasCompletedOnboarding(): bool
     {
         return $this->hasSubmittedAccountDetails();
     }
@@ -263,8 +264,8 @@ trait ManagesAccount
     /**
      * @return string
      */
-    private function getLocalIDField(){
-
+    private function getLocalIDField(): string
+    {
         if($this->getIncrementing()){
             return 'model_id';
         }else{
