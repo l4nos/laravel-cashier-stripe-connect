@@ -15,7 +15,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('stripe_connected_customer_mappings', function (Blueprint $table) {
             $table->string('model');
@@ -31,7 +31,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('stripe_connected_customer_mappings');
     }

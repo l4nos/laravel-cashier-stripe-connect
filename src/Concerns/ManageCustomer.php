@@ -3,6 +3,7 @@
 namespace Lanos\CashierConnect\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Lanos\CashierConnect\Models\ConnectCustomer;
 use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
@@ -16,7 +17,7 @@ trait ManageCustomer
     /**
      * @return mixed
      */
-    public function stripeCustomerMapping()
+    public function stripeCustomerMapping(): BelongsTo
     {
         return $this->belongsTo(ConnectCustomer::class, $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
     }
@@ -36,7 +37,7 @@ trait ManageCustomer
      *
      * @return string|null
      */
-    public function stripeCustomerId(): ?string
+    public function stripeCustomerId($connectedAccount = null): ?string
     {
         return $this->stripeCustomerMapping->stripe_customer_id;
     }
@@ -45,8 +46,15 @@ trait ManageCustomer
      * Checks if the model exists as a stripe customer
      * @return mixed
      */
-    public function hasCustomerRecord(){
-        return ($this->stripeCustomerMapping()->exists());
+    public function hasCustomerRecord($connectedAccount): bool
+    {
+        $query = $this->stripeCustomerMapping();
+
+        if ($connectedAccount) {
+            $query->where('stripe_account_id', $connectedAccount->stripeAccountId());
+        }
+    
+        return $query->exists();
     }
 
     /**
@@ -58,10 +66,10 @@ trait ManageCustomer
      * @throws AccountAlreadyExistsException
      * @throws AccountNotFoundException
      */
-    public function createStripeCustomer($connectedAccount, array $customerData = []){
-
+    public function createStripeCustomer($connectedAccount, array $customerData = []): Customer
+    {
         // Check if model already has a connected Stripe account.
-        if ($this->hasCustomerRecord()) {
+        if ($this->hasCustomerRecord($connectedAccount)) {
             throw new AccountAlreadyExistsException('Customer account already exists.');
         }
 
@@ -78,7 +86,6 @@ trait ManageCustomer
         $this->save();
 
         return $customer;
-
     }
 
     /**
@@ -87,18 +94,21 @@ trait ManageCustomer
      * This is only done this way for the purposes of the plugin and the dynamic mapping
      * @return Model
      */
-    private function retrieveHostConnectedAccount(): Model{
-
+    private function retrieveHostConnectedAccount(): Model
+    {
         $connectedAccount = ConnectMapping::where([
             ['stripe_account_id', '=', $this->stripeAccountId()]
         ])->first();
 
+        if (!$connectedAccount) {
+            throw new AccountNotFoundException('Connected account not found.');
+        }
+        
         $model = $connectedAccount->model;
 
         $modelId = $this->getHostIDField($connectedAccount);
 
         return $model::find($connectedAccount->$modelId);
-
     }
 
     /**
@@ -125,8 +135,8 @@ trait ManageCustomer
      * Provides support for UUID based models
      * @return string
      */
-    private function getLocalIDField(){
-
+    private function getLocalIDField(): string
+    {
         if($this->incrementing){
             return 'model_id';
         }else{
@@ -139,7 +149,8 @@ trait ManageCustomer
      * Provides support for UUID based models
      * @return string
      */
-    private function getHostIDField(ConnectMapping $connectedAccount){
+    private function getHostIDField(ConnectMapping $connectedAccount): string
+    {
 
         if($connectedAccount->model_id){
             return 'model_id';
