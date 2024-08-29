@@ -73,11 +73,9 @@ trait ManagesTerminals
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function createConnectionToken(string $location, bool $direct = false): ConnectionToken{
+    public function createConnectionToken(array $params = [], bool $direct = false): ConnectionToken{
         $this->assertAccountExists();
-        return ConnectionToken::create([
-            "location" => $location
-        ], $this->stripeAccountOptions([], $direct));
+        return ConnectionToken::create($params, $this->stripeAccountOptions([], $direct));
     }
 
 }
