@@ -28,7 +28,8 @@ trait ManagesConnectProducts
      */
     public function getAllProductsForAccount(): Collection
     {
-       return Product::all(null, $this->stripeAccountOptions([], true));
+        $this->assertAccountExists();
+        return Product::all(null, $this->stripeAccountOptions([], true));
     }
 
     /**
@@ -39,7 +40,8 @@ trait ManagesConnectProducts
      */
     public function getSingleConnectedProduct($id): Product
     {
-       return Product::retrieve($id, $this->stripeAccountOptions([], true));
+        $this->assertAccountExists();
+        return Product::retrieve($id, $this->stripeAccountOptions([], true));
     }
 
     /**
@@ -50,6 +52,7 @@ trait ManagesConnectProducts
      */
     public function createConnectedProduct($data): Product
     {
+        $this->assertAccountExists();
         return Product::create($data, $this->stripeAccountOptions([], true));
     }
 
@@ -62,6 +65,7 @@ trait ManagesConnectProducts
      */
     public function editConnectedProduct($id, $data): Product
     {
+        $this->assertAccountExists();
         return Product::update($id, $data, $this->stripeAccountOptions([], true));
     }
 
@@ -72,6 +76,7 @@ trait ManagesConnectProducts
      */
     public function getPricesForConnectedProduct($id): Collection
     {
+        $this->assertAccountExists();
         return Price::all([
             "product" => $id
         ], $this->stripeAccountOptions([], true) );
@@ -83,9 +88,11 @@ trait ManagesConnectProducts
      * @param $data
      * @return Price
      * @throws ApiErrorException
+     * @throws AccountNotFoundException
      */
     public function createPriceForConnectedProduct($id, $data): Price
     {
+        $this->assertAccountExists();
         return Price::create($data + [
             "product" => $id
         ], $this->stripeAccountOptions([], true) );
@@ -96,9 +103,11 @@ trait ManagesConnectProducts
      * @param $id
      * @return Price
      * @throws ApiErrorException
+     * @throws AccountNotFoundException
      */
     public function getSingleConnectedPrice($id): Price
     {
+        $this->assertAccountExists();
         return Price::retrieve($id, $this->stripeAccountOptions([], true) );
     }
 
@@ -108,9 +117,11 @@ trait ManagesConnectProducts
      * @param $data
      * @return Price
      * @throws ApiErrorException
+     * @throws AccountNotFoundException
      */
     public function editConnectedPrice($id, $data): Price
     {
+        $this->assertAccountExists();
         return Price::update($id, $data, $this->stripeAccountOptions([], true));
     }
 
