@@ -42,10 +42,15 @@ class CashierConnectServiceProvider extends ServiceProvider
     protected function initializePublishing()
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([
+
+            $publishesMigrationsMethod = method_exists($this, 'publishesMigrations')
+                ? 'publishesMigrations'
+                : 'publishes';
+
+            $this->{$publishesMigrationsMethod}([
                 __DIR__.'/../database/migrations' => $this->app->databasePath('migrations'),
             ], 'cashier-connect-migrations');
-            $this->publishes([
+            $this->{$publishesMigrationsMethod}([
                 __DIR__.'/../database/migrations' => $this->app->databasePath('migrations/tenant'),
             ], 'cashier-connect-tenancy-migrations');
         }
