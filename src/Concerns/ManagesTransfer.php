@@ -26,7 +26,7 @@ trait ManagesTransfer
      * @return Transfer
      * @throws AccountNotFoundException|ApiErrorException
      */
-    public function transferToStripeAccount(int $amount, string $currencyToUse = null, array $options = []): Transfer
+    public function transferToStripeAccount(int $amount, ?string $currencyToUse = null, array $options = []): Transfer
     {
         $this->assertAccountExists();
 
