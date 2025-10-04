@@ -28,7 +28,7 @@ trait CanCharge
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function createDirectCharge(int $amount, string $currencyToUse = null, array $options = []): PaymentIntent
+    public function createDirectCharge(int $amount, ?string $currencyToUse = null, array $options = []): PaymentIntent
     {
 
         $this->assertAccountExists();
@@ -62,7 +62,7 @@ trait CanCharge
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function createDestinationCharge(int $amount, string $currencyToUse = null, array $options = [], bool $onBehalfOf = false): PaymentIntent
+    public function createDestinationCharge(int $amount, ?string $currencyToUse = null, array $options = [], bool $onBehalfOf = false): PaymentIntent
     {
 
         $this->assertAccountExists();

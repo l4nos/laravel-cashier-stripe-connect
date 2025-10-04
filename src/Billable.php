@@ -70,7 +70,7 @@ trait Billable
      * @param $providedCurrency
      * @return mixed|string
      */
-    public function establishTransferCurrency($providedCurrency = null){
+    public function establishTransferCurrency(?string $providedCurrency = null){
 
         if($providedCurrency){
             return $providedCurrency;
