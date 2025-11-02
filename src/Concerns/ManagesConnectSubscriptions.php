@@ -6,8 +6,6 @@ use Exception;
 use Illuminate\Support\Facades\Date;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Support\Str;
-use Lanos\CashierConnect\Models\ConnectSubscription;
-use Lanos\CashierConnect\Models\ConnectSubscriptionItem;
 use Stripe\Balance;
 use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;
@@ -57,7 +55,7 @@ trait ManagesConnectSubscriptions
 
         // TODO REWRITE TO USE RELATIONAL CREATION
         // GENERATE DATABASE RECORD FOR SUBSCRIPTION
-        $ConnectSubscriptionRecord = ConnectSubscription::create([
+        $ConnectSubscriptionRecord = config('cashierconnect.models.connect_subscription')::create([
             "name" => $name,
             "stripe_id" => $subscription->id,
             "stripe_status" => $subscription->status,
@@ -68,7 +66,7 @@ trait ManagesConnectSubscriptions
         ]);
 
         // TODO REWRITE TO USE RELATIONAL CREATION
-        $ConnectSubscriptionItemRecord = ConnectSubscriptionItem::create([
+        $ConnectSubscriptionItemRecord = config('cashierconnect.models.connect_subscription_item')::create([
             "connected_subscription_id" => $ConnectSubscriptionRecord->id,
             "stripe_id" => $subscription->items->data[0]->id,
             "connected_product" => $subscription->items->data[0]->price->product,
@@ -122,7 +120,7 @@ trait ManagesConnectSubscriptions
         // IT IS A CUSTOMER TRAIT MODEL
         $traits = class_uses($customer);
 
-        if (!in_array('Lanos\CashierConnect\ConnectCustomer', $traits)) {
+        if (!in_array(config('cashierconnect.models.connect_customer'), $traits)) {
             throw new Exception('The '.class_basename($customer).' model does not have the connect ConnectCustomer trait.');
         }
 
