@@ -5,7 +5,7 @@
     "type": "library",
     "require": {
         "php" : "^7.4|^8.1|^8.2|^8.3|^8.4",
-        "laravel/cashier": "^12.6|^13.4|^v14.6.0|^v15.3.0",
+        "laravel/cashier": "^12.6|^13.4|^v14.6.0|^v15.3.0|^16.0",
         "illuminate/console": "^9.0|^10.0|^11.0|^12.0",
         "illuminate/contracts": "^9.0|^10.0|^11.0|^12.0",
         "illuminate/database": "^9.0|^10.0|^11.0|^12.0",

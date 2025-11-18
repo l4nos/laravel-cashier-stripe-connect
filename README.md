@@ -9,6 +9,22 @@ Working on open source packages and helping other developers is my true passion,
 
 ### Documentation has been updated to cover the new features introduced in 1.2.2.
 
+## V1.3.0 Update (Cashier 16)
+This update brings compatibility with Laravel Cashier 16.x which introduces support for Stripe's new metered billing API (Stripe Billing Meters). Changes include:
+
+- Support for Laravel Cashier ^16.0
+- Added new columns to the `connected_subscription_items` table: `meter_event_name` and `meter_id`
+- Compatibility with Stripe API version `2025-07-30.basil`
+
+To upgrade, run:
+```bash
+composer update
+php artisan vendor:publish --tag="cashier-connect-migrations"
+php artisan migrate
+```
+
+**Important Note:** After deploying this update, remember to update your Stripe API version in your Stripe dashboard to `2025-07-30.basil` to take full advantage of the new features.
+
 ## V1.2.3 Update
 This update bring new functionality for users wishing to use payment links with their connected accounts:
 - Create both Direct and Destination payment links, including using "on behalf of".
