@@ -21,7 +21,7 @@ class WebhookController extends Controller
      */
     public function __construct()
     {
-        if (config('cashier.webhook.secret')) {
+        if (config('cashier.webhook.secret') || config('cashierconnect.webhook.secret')) {
             $this->middleware(VerifyConnectWebhook::class);
         }
     }

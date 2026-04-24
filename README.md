@@ -2,9 +2,74 @@
 	Cashier For Connect
 </h1>
 
- ## Intro
+### Help me to keep helping you.
+Working on open source packages and helping other developers is my true passion, unfortunately I have to work in order to pay bills. The more people that help me out, the more time I can spend building cool packages and supporting developers. It doesn't have to be much, just a cup of coffee's worth. It's all appreciated!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E0ZF7W0)
+
+### Documentation has been updated to cover the new features introduced in 1.2.2.
+
+## V1.3.0 Update (Cashier 16)
+This update brings compatibility with Laravel Cashier 16.x which introduces support for Stripe's new metered billing API (Stripe Billing Meters). Changes include:
+
+- Support for Laravel Cashier ^16.0
+- Added new columns to the `connected_subscription_items` table: `meter_event_name` and `meter_id`
+- Compatibility with Stripe API version `2025-07-30.basil`
+
+To upgrade, run:
+```bash
+composer update
+php artisan vendor:publish --tag="migrations"
+php artisan migrate
+```
+
+**Important Note:** After deploying this update, remember to update your Stripe API version in your Stripe dashboard to `2025-07-30.basil` to take full advantage of the new features.
+
+## V1.2.3 Update
+This update bring new functionality for users wishing to use payment links with their connected accounts:
+- Create both Direct and Destination payment links, including using "on behalf of".
+- Utilise both percentage and fixed application fees on payment links
+- Retrieve all direct payment links for a connected account
+  - Note: It's difficult and impractical to retrieve all destination payment links as they are currently not filterable by connected account directly on the Stripe API, i've requested they add this in, if they do i'll update the plugin. Until then if you want to store and return them to your users, you need to store a copy locally on your application database.
+
+## V1.2.0 Update
+This update bring new functionality for users wishing to use both physical terminals and the new Apple/Android tap to pay functionality. It will facilitate the use of:
+- Adding terminal locations
+- Adding a reader and associating it with a terminal
+- Handling connection token requests
+
+## V1.1.0 Update (Cashier 15)
+The Cashier 15 update brought about a few changes to the package. These include:
+
+- Migrations no longer auto publish, you must now publish them using the command stated in the GitBook readme.
+  - Any use of ignoreMigrations() in your code can be and should be safely removed
+- Stripe API Version is now 2023-10-16, changes have been made to accommodate this
+
+## Intro
 
 This package is designed to seamlessly connect all of your eloquent models, mapping them to the relevant stripe entities in order to make a marketplace or payments platform.
+
+## Installation
+
+After installing the package via Composer, you can publish the configuration file to customize the package settings:
+
+```bash
+php artisan vendor:publish --provider="Lanos\CashierConnect\CashierConnectServiceProvider" --tag="config"
+```
+
+This will create a `cashierconnect.php` file in your `config` directory.
+
+You can also publish the migrations:
+
+```bash
+php artisan vendor:publish --provider="Lanos\CashierConnect\CashierConnectServiceProvider" --tag="migrations"
+```
+
+Or publish everything at once (config and migrations):
+
+```bash
+php artisan vendor:publish --provider="Lanos\CashierConnect\CashierConnectServiceProvider"
+```
 
 ## Documentation
 

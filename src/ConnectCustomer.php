@@ -48,23 +48,23 @@ trait ConnectCustomer
             $traits = class_uses($connectedAccount);
 
             if(!in_array('Lanos\CashierConnect\Billable', $traits)){
-                throw new Exception('This model does not have a connect Billable trait on.');
+                throw new Exception('The '.class_basename($connectedAccount).' model does not have the connect Billable trait.');
             }
 
             if ($connectedAccount->hasStripeAccount()) {
                 $options['stripe_account'] = $connectedAccount->stripeAccountId();
             }else{
-                throw new AccountNotFoundException('This model does not have a connect Billable trait on.');
+                throw new AccountNotFoundException('The '.class_basename($connectedAccount).' model does not have a Stripe Account.');
             }
         }
 
-        // Workaround for Cashier 12.x 
+        // Workaround for Cashier 12.x
         if (version_compare(Cashier::VERSION, '12.15.0', '<=')) {
             return array_merge(Cashier::stripeOptions($options));
         }
 
         $stripeOptions = Cashier::stripe($options);
-        
+
         return array_merge($options, [
             'api_key' => $stripeOptions->getApiKey()
         ]);

@@ -80,6 +80,9 @@ trait ManagesConnectSubscriptions
 
     }
 
+    /**
+     * @return mixed
+     */
     public function getSubscriptions(){
         return $this->stripeAccountMapping->subscriptions;
     }
@@ -95,6 +98,11 @@ trait ManagesConnectSubscriptions
         return Subscription::retrieve($id, $this->stripeAccountOptions([], true));
     }
 
+    /**
+     * @param $customer
+     * @return mixed
+     * @throws Exception
+     */
     private function determineCustomerInput($customer)
     {
         if (gettype($customer) === 'string') {
@@ -104,13 +112,18 @@ trait ManagesConnectSubscriptions
         }
     }
 
+    /**
+     * @param $customer
+     * @return mixed
+     * @throws Exception
+     */
     private function handleConnectedCustomer($customer)
     {
         // IT IS A CUSTOMER TRAIT MODEL
         $traits = class_uses($customer);
 
         if (!in_array('Lanos\CashierConnect\ConnectCustomer', $traits)) {
-            throw new Exception('This model does not have a connect ConnectCustomer trait on.');
+            throw new Exception('The '.class_basename($customer).' model does not have the connect ConnectCustomer trait.');
         }
 
         $customer->assetCustomerExists();

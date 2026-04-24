@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Lanos\CashierConnect;
-
 
 use Lanos\CashierConnect\Concerns\CanCharge;
 use Lanos\CashierConnect\Concerns\ManagesAccount;
@@ -12,8 +10,10 @@ use Lanos\CashierConnect\Concerns\ManagesBalance;
 use Lanos\CashierConnect\Concerns\ManagesConnectCustomer;
 use Lanos\CashierConnect\Concerns\ManagesConnectProducts;
 use Lanos\CashierConnect\Concerns\ManagesConnectSubscriptions;
+use Lanos\CashierConnect\Concerns\ManagesPaymentLinks;
 use Lanos\CashierConnect\Concerns\ManagesPerson;
 use Lanos\CashierConnect\Concerns\ManagesPayout;
+use Lanos\CashierConnect\Concerns\ManagesTerminals;
 use Lanos\CashierConnect\Concerns\ManagesTransfer;
 use Laravel\Cashier\Cashier;
 
@@ -30,13 +30,14 @@ trait Billable
     use ManagesPerson;
     use ManagesBalance;
     use ManagesTransfer;
+    use ManagesPaymentLinks;
     use ManagesConnectCustomer;
     use ManagesConnectSubscriptions;
     use ManagesConnectProducts;
     use CanCharge;
     use ManagesPayout;
     use ManagesApplePayDomain;
-
+    use ManagesTerminals;
 
     /**
      * The default Stripe API options for the current Billable model.
@@ -65,7 +66,11 @@ trait Billable
         ]);
     }
 
-    public function establishTransferCurrency($providedCurrency = null){
+    /**
+     * @param $providedCurrency
+     * @return mixed|string
+     */
+    public function establishTransferCurrency(?string $providedCurrency = null){
 
         if($providedCurrency){
             return $providedCurrency;

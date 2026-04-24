@@ -21,7 +21,6 @@ class CashierConnectServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->initializeMigrations();
         $this->initializePublishing();
         $this->initializeCommands();
         $this->setupRoutes();
@@ -36,18 +35,6 @@ class CashierConnectServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the package migrations.
-     *
-     * @return void
-     */
-    protected function initializeMigrations()
-    {
-        if (Cashier::$runsMigrations && $this->app->runningInConsole()) {
-            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        }
-    }
-
-    /**
      * Register the package's publishable resources.
      *
      * @return void
@@ -55,12 +42,17 @@ class CashierConnectServiceProvider extends ServiceProvider
     protected function initializePublishing()
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([
+
+            $publishesMigrationsMethod = method_exists($this, 'publishesMigrations')
+                ? 'publishesMigrations'
+                : 'publishes';
+
+            $this->{$publishesMigrationsMethod}([
                 __DIR__.'/../database/migrations' => $this->app->databasePath('migrations'),
-            ], 'cashier-connect-migrations');
-            $this->publishes([
+            ], 'migrations');
+            $this->{$publishesMigrationsMethod}([
                 __DIR__.'/../database/migrations' => $this->app->databasePath('migrations/tenant'),
-            ], 'cashier-connect-tenancy-migrations');
+            ], 'tenancy-migrations');
         }
     }
 
@@ -96,9 +88,11 @@ class CashierConnectServiceProvider extends ServiceProvider
      */
     protected function setupConfig()
     {
-        $this->publishes([
-            __DIR__.'/../config/cashierconnect.php' => config_path('cashierconnect.php'),
-        ]);
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/cashierconnect.php' => config_path('cashierconnect.php'),
+            ], 'config');
+        }
     }
 
 }

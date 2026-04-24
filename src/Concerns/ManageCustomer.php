@@ -95,9 +95,9 @@ trait ManageCustomer
 
         $model = $connectedAccount->model;
 
-        $model::find($this->getHostIDField($connectedAccount));
+        $modelId = $this->getHostIDField($connectedAccount);
 
-        return $model;
+        return $model::find($connectedAccount->$modelId);
 
     }
 

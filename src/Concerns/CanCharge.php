@@ -28,7 +28,7 @@ trait CanCharge
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function createDirectCharge(int $amount, string $currencyToUse = null, array $options = []): PaymentIntent
+    public function createDirectCharge(int $amount, ?string $currencyToUse = null, array $options = []): PaymentIntent
     {
 
         $this->assertAccountExists();
@@ -53,7 +53,16 @@ trait CanCharge
 
     }
 
-    public function createDestinationCharge(int $amount, string $currencyToUse = null, array $options = [], bool $onBehalfOf = false): PaymentIntent
+    /**
+     * @param int $amount
+     * @param string|null $currencyToUse
+     * @param array $options
+     * @param bool $onBehalfOf
+     * @return PaymentIntent
+     * @throws AccountNotFoundException
+     * @throws ApiErrorException
+     */
+    public function createDestinationCharge(int $amount, ?string $currencyToUse = null, array $options = [], bool $onBehalfOf = false): PaymentIntent
     {
 
         $this->assertAccountExists();
@@ -74,9 +83,9 @@ trait CanCharge
         // APPLY PLATFORM FEE COMMISSION - SET THIS AGAINST THE MODEL
         if (isset($this->commission_type) && isset($this->commission_rate)) {
             if ($this->commission_type === 'percentage') {
-                $options['application_fee_amount'] = round($this->calculatePercentageFee($amount),2);
+                $options['application_fee_amount'] = ceil($this->calculatePercentageFee($amount));
             } else {
-                $options['application_fee_amount'] = round($this->commission_rate ,2);
+                $options['application_fee_amount'] = ceil($this->commission_rate);
             }
         }
 
@@ -85,7 +94,11 @@ trait CanCharge
     }
 
 
-
+    /**
+     * @param $amount
+     * @return float|int
+     * @throws \Exception
+     */
     private function calculatePercentageFee($amount){
         if($this->commission_rate < 100){
             return ($this->commission_rate / 100) * $amount;

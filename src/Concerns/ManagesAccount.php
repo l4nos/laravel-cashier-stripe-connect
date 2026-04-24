@@ -42,7 +42,7 @@ trait ManagesAccount
             ];
         }
 
-        $mapping = $this->stripeAccountMapping()->update([
+        $this->stripeAccountMapping()->update([
             "future_requirements" => $account->future_requirements->toArray(),
             "requirements" => $account->requirements->toArray(),
             "charges_enabled" => $account->charges_enabled
@@ -100,7 +100,7 @@ trait ManagesAccount
     protected function assertAccountExists(): void
     {
         if (! $this->hasStripeAccount()) {
-            throw new AccountNotFoundException('Stripe account does not exist.');
+            throw new AccountNotFoundException('Stripe account does not exist for '.class_basename(static::class).' model');
         }
     }
 
@@ -260,9 +260,12 @@ trait ManagesAccount
         return $accountUpdate;
     }
 
+    /**
+     * @return string
+     */
     private function getLocalIDField(){
 
-        if($this->incrementing){
+        if($this->getIncrementing()){
             return 'model_id';
         }else{
             return 'model_uuid';
