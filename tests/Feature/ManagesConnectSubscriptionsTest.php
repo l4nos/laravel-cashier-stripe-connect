@@ -12,6 +12,11 @@ use Lanos\CashierConnect\Tests\TestCase;
 
 class ManagesConnectSubscriptionsTest extends TestCase
 {
+    /**
+     * Basil API shape (Cashier 16+): current_period_end lives on the
+     * subscription item, and the invoice exposes payments instead of
+     * payment_intent.
+     */
     protected function subscriptionFixture(array $overrides = []): array
     {
         return array_merge([
@@ -19,15 +24,25 @@ class ManagesConnectSubscriptionsTest extends TestCase
             'object' => 'subscription',
             'status' => 'active',
             'customer' => 'cus_test123',
-            'current_period_end' => 1893456000,
             'items' => [
                 'object' => 'list',
                 'data' => [
                     [
                         'id' => 'si_test123',
                         'object' => 'subscription_item',
+                        'current_period_end' => 1893456000,
                         'price' => ['id' => 'price_test123', 'object' => 'price', 'product' => 'prod_test123'],
                         'quantity' => 1,
+                    ],
+                ],
+            ],
+            'latest_invoice' => [
+                'id' => 'in_test123',
+                'object' => 'invoice',
+                'payments' => [
+                    'object' => 'list',
+                    'data' => [
+                        ['id' => 'inpm_test123', 'payment' => ['payment_intent' => 'pi_test123', 'type' => 'payment_intent']],
                     ],
                 ],
             ],
@@ -85,6 +100,41 @@ class ManagesConnectSubscriptionsTest extends TestCase
         $this->assertSame('prod_test123', $item->connected_product);
         $this->assertSame('price_test123', $item->connected_price);
         $this->assertSame(2, (int) $item->quantity);
+    }
+
+    public function test_create_direct_subscription_expands_invoice_payments_on_cashier_16(): void
+    {
+        $this->stripeHttp->queueResponse($this->subscriptionFixture());
+
+        $user = $this->createUserWithAccount();
+
+        $user->createDirectSubscription('cus_test123', 'price_test123');
+
+        $expand = $this->stripeHttp->lastParams()['expand'];
+
+        if (version_compare(\Laravel\Cashier\Cashier::VERSION, '16.0.0', '>=')) {
+            $this->assertContains('latest_invoice.payments', $expand);
+            $this->assertNotContains('latest_invoice.payment_intent', $expand);
+        } else {
+            $this->assertContains('latest_invoice.payment_intent', $expand);
+        }
+    }
+
+    public function test_create_direct_subscription_falls_back_to_legacy_period_end(): void
+    {
+        // Pre-Basil shape: current_period_end on the subscription itself.
+        $fixture = $this->subscriptionFixture();
+        unset($fixture['items']['data'][0]['current_period_end']);
+        $fixture['current_period_end'] = 1893000000;
+
+        $this->stripeHttp->queueResponse($fixture);
+
+        $user = $this->createUserWithAccount();
+
+        $user->createDirectSubscription('cus_test123', 'price_test123');
+
+        $record = ConnectSubscription::where('stripe_id', 'sub_test123')->first();
+        $this->assertSame(1893000000, \Illuminate\Support\Carbon::parse($record->ends_at)->getTimestamp());
     }
 
     public function test_create_direct_subscription_applies_percentage_commission(): void
