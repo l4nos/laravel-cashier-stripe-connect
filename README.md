@@ -9,7 +9,7 @@ Working on open source packages and helping other developers is my true passion,
 
 ### Documentation has been updated to cover the new features introduced in 1.2.2.
 
-## V1.3.3 Update (Laravel 13 + Refunds)
+## V1.3.4 Update (Laravel 13 + Refunds)
 This update brings full Laravel 13 support and adds refund handling for direct charges:
 
 - Support for Laravel 13 / Illuminate ^13.0
