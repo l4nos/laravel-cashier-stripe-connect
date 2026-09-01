@@ -9,6 +9,17 @@ Working on open source packages and helping other developers is my true passion,
 
 ### Documentation has been updated to cover the new features introduced in 1.2.2.
 
+## V1.3.3 Update (Laravel 13 + Refunds)
+This update brings full Laravel 13 support and adds refund handling for direct charges:
+
+- Support for Laravel 13 / Illuminate ^13.0
+- Added `refundDirectCharge()` for refunding direct charges. Direct charges live on the connected account, so they cannot be refunded via standard Cashier (the Stripe-Account header is required). Destination charge refunds should still be handled via standard Cashier as before.
+- Fixed subscription `ends_at` being set incorrectly under Cashier 16 (Stripe's Basil API moved `current_period_end` to subscription items)
+- Fixed webhook signature verification being triggered by Cashier's own webhook secret instead of only the connect secret
+- Fixed `removePaymentMethod()` ownership check and detach call
+- The package now has a full test suite with CI running across PHP 8.1 - 8.5, Cashier 14 - 16 and Laravel 10 - 13
+- Minimum PHP version is now 8.1
+
 ## V1.3.0 Update (Cashier 16)
 This update brings compatibility with Laravel Cashier 16.x which introduces support for Stripe's new metered billing API (Stripe Billing Meters). Changes include:
 
