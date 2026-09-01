@@ -9,6 +9,7 @@ use Stripe\Balance;
 use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
+use Stripe\Refund;
 use Stripe\Transfer;
 
 /**
@@ -93,6 +94,35 @@ trait CanCharge
 
     }
 
+
+    /**
+     * Refunds a direct charge made on the connected account.
+     *
+     * Direct charges live on the connected account, so the refund must be
+     * sent with the Stripe-Account header - standard Cashier refunds cannot
+     * be used for these. Destination charge refunds should be handled via
+     * standard Cashier instead.
+     *
+     * @param string $paymentIntent The payment intent ID (pi_...) of the direct charge.
+     * @param int|null $amount Amount in the smallest currency unit to refund, or null for a full refund.
+     * @param array $options Additional Stripe refund options e.g. reason, refund_application_fee, metadata.
+     * @return Refund
+     * @throws AccountNotFoundException
+     * @throws ApiErrorException
+     */
+    public function refundDirectCharge(string $paymentIntent, ?int $amount = null, array $options = []): Refund
+    {
+        $this->assertAccountExists();
+
+        if ($amount !== null) {
+            $options['amount'] = $amount;
+        }
+
+        return Refund::create(
+            ['payment_intent' => $paymentIntent] + $options,
+            $this->stripeAccountOptions([], true)
+        );
+    }
 
     /**
      * @param $amount
