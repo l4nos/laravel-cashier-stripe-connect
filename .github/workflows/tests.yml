@@ -45,7 +45,12 @@ jobs:
           coverage: none
 
       - name: Constrain dependencies for matrix
-        run: composer require "laravel/cashier:${{ matrix.cashier }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+        run: |
+          # Older matrix legs install EOL framework versions which Packagist
+          # blocks via security advisories. This is dev-only compat testing,
+          # nothing here ships to consumers.
+          composer config policy.advisories.block false
+          composer require "laravel/cashier:${{ matrix.cashier }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
 
       - name: Install dependencies
         run: composer update --prefer-dist --no-interaction

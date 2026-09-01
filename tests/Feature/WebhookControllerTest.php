@@ -18,6 +18,18 @@ class WebhookControllerTest extends TestCase
         $response->assertForbidden();
     }
 
+    public function test_cashier_webhook_secret_alone_does_not_trigger_connect_verification(): void
+    {
+        // Regression: the middleware must only attach when the *connect* secret
+        // is configured. A plain Cashier secret must not 403 connect webhooks.
+        config()->set('cashierconnect.webhook.secret', null);
+        config()->set('cashier.webhook.secret', 'whsec_cashier_secret');
+
+        $response = $this->postJson('/connectWebhook', ['type' => 'charge.succeeded']);
+
+        $response->assertOk();
+    }
+
     public function test_webhook_endpoint_accepts_signed_requests(): void
     {
         $payload = json_encode(['type' => 'charge.succeeded', 'data' => ['object' => []]]);
