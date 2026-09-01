@@ -6,8 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\Date;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Support\Str;
-use Lanos\CashierConnect\Models\ConnectSubscription;
-use Lanos\CashierConnect\Models\ConnectSubscriptionItem;
+use Lanos\CashierConnect\ConnectCustomer;
 use Laravel\Cashier\Cashier;
 use Stripe\Balance;
 use Stripe\Charge;
@@ -133,7 +132,7 @@ trait ManagesConnectSubscriptions
         // IT IS A CUSTOMER TRAIT MODEL
         $traits = class_uses($customer);
 
-        if (!in_array(config('cashierconnect.models.connect_customer'), $traits)) {
+        if (!in_array(ConnectCustomer::class, $traits)) {
             throw new Exception('The '.class_basename($customer).' model does not have the connect ConnectCustomer trait.');
         }
 

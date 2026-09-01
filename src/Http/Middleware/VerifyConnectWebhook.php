@@ -24,8 +24,8 @@ class VerifyConnectWebhook
             WebhookSignature::verifyHeader(
                 $request->getContent(),
                 $request->header('Stripe-Signature'),
-                config('cashierconnect.models.webhook.secret'),
-                config('cashierconnect.models.webhook.tolerance')
+                config('cashierconnect.webhook.secret'),
+                config('cashierconnect.webhook.tolerance')
             );
         } catch (SignatureVerificationException $exception) {
             throw new AccessDeniedHttpException($exception->getMessage(), $exception);

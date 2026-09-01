@@ -80,7 +80,7 @@ trait Billable
             return $this->defaultCurrency;
         }
 
-        return config('cashierconnect.models.currency');
+        return config('cashierconnect.currency');
 
     }
 

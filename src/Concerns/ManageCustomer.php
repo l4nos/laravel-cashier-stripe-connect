@@ -138,7 +138,7 @@ trait ManageCustomer
      * Provides support for UUID based models
      * @return string
      */
-    private function getHostIDField(ConnectMapping $connectedAccount){
+    private function getHostIDField(ConnectMappingContract $connectedAccount){
 
         if($connectedAccount->model_id){
             return 'model_id';

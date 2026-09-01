@@ -4,7 +4,6 @@ use Lanos\CashierConnect\Models\ConnectSubscriptionItem;
 use Lanos\CashierConnect\Models\ConnectMapping;
 use Lanos\CashierConnect\Models\ConnectSubscription;
 use Lanos\CashierConnect\Models\ConnectCustomer;
-use Lanos\CashierConnect\Models\TestModel;
 
 
 return [
@@ -14,7 +13,6 @@ return [
         'connect_subscription' => ConnectSubscription::class,
         'connect_mapping' => ConnectMapping::class,
         'connect_customer' => ConnectCustomer::class,
-        'test_model' => TestModel::class,
     ],
 
     'webhook' => [
