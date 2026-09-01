@@ -76,7 +76,7 @@ trait Billable
             return $providedCurrency;
         }
 
-        if($this->defaultCurrency){
+        if($this->defaultCurrency ?? null){
             return $this->defaultCurrency;
         }
 

@@ -37,11 +37,11 @@ trait ManageConnectedPaymentMethods
 
         $method = PaymentMethod::retrieve($id, $this->stripeAccountOptions($this->stripeAccountId()));
 
-        if(!$method->customer === $this->stripeAccountId()){
+        if($method->customer !== $this->stripeCustomerId()){
             throw new Exception('This payment method doesn\'t belong to this customer or is invalid');
         }
 
-        return PaymentMethod::detach($id, $this->stripeAccountOptions($this->stripeAccountId()));
+        return $method->detach(null, $this->stripeAccountOptions($this->stripeAccountId()));
 
     }
 

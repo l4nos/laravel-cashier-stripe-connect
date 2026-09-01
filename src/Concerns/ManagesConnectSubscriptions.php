@@ -6,6 +6,9 @@ use Exception;
 use Illuminate\Support\Facades\Date;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Support\Str;
+use Lanos\CashierConnect\Models\ConnectSubscription;
+use Lanos\CashierConnect\Models\ConnectSubscriptionItem;
+use Laravel\Cashier\Cashier;
 use Stripe\Balance;
 use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;
@@ -43,15 +46,25 @@ trait ManagesConnectSubscriptions
 
         $customerID = $this->determineCustomerInput($customer);
 
+        // Stripe API 2025-07-30.basil (Cashier 16 / stripe-php 17+) removed
+        // payment_intent from the Invoice object in favour of invoice payments.
+        $expand = version_compare(Cashier::VERSION, '16.0.0', '>=')
+            ? ["latest_invoice.payments", "latest_invoice.confirmation_secret"]
+            : ["latest_invoice.payment_intent"];
+
         $subscription = Subscription::create(
             $data + [
-                "customer" => $this->determineCustomerInput($customer),
+                "customer" => $customerID,
                 "items" => [
                     ['price' => $price, "quantity" => $quantity]
                 ],
                 "payment_behavior" => "default_incomplete",
-                "expand" => ["latest_invoice.payment_intent"]
+                "expand" => $expand
             ], $this->stripeAccountOptions([], true));
+
+        // Basil moved current_period_end from the Subscription to its items.
+        $firstItem = $subscription->items->data[0] ?? null;
+        $currentPeriodEnd = $firstItem->current_period_end ?? $subscription->current_period_end ?? null;
 
         // TODO REWRITE TO USE RELATIONAL CREATION
         // GENERATE DATABASE RECORD FOR SUBSCRIPTION
@@ -60,7 +73,7 @@ trait ManagesConnectSubscriptions
             "stripe_id" => $subscription->id,
             "stripe_status" => $subscription->status,
             "connected_price_id" => $price,
-            "ends_at" => Date::parse($subscription->current_period_end),
+            "ends_at" => $currentPeriodEnd ? Date::parse($currentPeriodEnd) : null,
             "stripe_customer_id" => $customerID,
             "stripe_account_id" => $this->stripeAccountId()
         ]);
