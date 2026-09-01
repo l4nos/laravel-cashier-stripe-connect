@@ -1,6 +1,19 @@
 <?php
 
+use Lanos\CashierConnect\Models\ConnectSubscriptionItem;
+use Lanos\CashierConnect\Models\ConnectMapping;
+use Lanos\CashierConnect\Models\ConnectSubscription;
+use Lanos\CashierConnect\Models\ConnectCustomer;
+
+
 return [
+
+    'models' => [
+        'connect_subscription_item' => ConnectSubscriptionItem::class,
+        'connect_subscription' => ConnectSubscription::class,
+        'connect_mapping' => ConnectMapping::class,
+        'connect_customer' => ConnectCustomer::class,
+    ],
 
     'webhook' => [
         'secret' => env('CONNECT_WEBHOOK_SECRET'),

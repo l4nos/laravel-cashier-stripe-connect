@@ -5,7 +5,6 @@ namespace Lanos\CashierConnect\Concerns;
 
 use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
-use Lanos\CashierConnect\Models\ConnectMapping;
 use Stripe\Account;
 use Stripe\ApplePayDomain;
 use Stripe\Collection;

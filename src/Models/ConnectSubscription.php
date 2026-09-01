@@ -4,10 +4,11 @@ namespace Lanos\CashierConnect\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Lanos\CashierConnect\StripeEntity;
+use Lanos\CashierConnect\Contracts\ConnectSubscriptionContract;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Subscription;
 
-class ConnectSubscription extends Model
+class ConnectSubscription extends Model implements ConnectSubscriptionContract
 {
 
     use StripeEntity;
@@ -16,7 +17,7 @@ class ConnectSubscription extends Model
     protected $table = 'connected_subscriptions';
 
     public function items(){
-        return $this->hasMany(ConnectSubscriptionItem::class, 'connected_subscription_id', 'id');
+        return $this->hasMany(config('cashierconnect.models.connect_subscription_item'), 'connected_subscription_id', 'id');
     }
 
     /**

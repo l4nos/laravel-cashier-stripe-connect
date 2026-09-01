@@ -3,8 +3,9 @@
 namespace Lanos\CashierConnect\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Lanos\CashierConnect\Contracts\ConnectMappingContract;
 
-class ConnectMapping extends Model
+class ConnectMapping extends Model implements ConnectMappingContract
 {
 
     protected $primaryKey = null;
@@ -22,7 +23,7 @@ class ConnectMapping extends Model
     protected $table = 'stripe_connect_mappings';
 
     public function subscriptions(){
-        return $this->hasMany(ConnectSubscription::class, 'stripe_account_id', 'stripe_account_id');
+        return $this->hasMany(config('cashierconnect.models.connect_subscription'), 'stripe_account_id', 'stripe_account_id');
     }
 
 }
