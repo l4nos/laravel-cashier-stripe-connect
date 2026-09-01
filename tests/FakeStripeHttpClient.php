@@ -4,12 +4,24 @@ namespace Lanos\CashierConnect\Tests;
 
 use Stripe\HttpClient\ClientInterface;
 
+// stripe-php renamed HttpClientInterface to ClientInterface in v15.
+// Alias whichever exists so the suite runs against Cashier 14-16.
+if (interface_exists(ClientInterface::class)) {
+    interface StripeHttpClientContract extends ClientInterface
+    {
+    }
+} else {
+    interface StripeHttpClientContract extends \Stripe\HttpClient\HttpClientInterface
+    {
+    }
+}
+
 /**
  * Fake Stripe HTTP client. Records every request and returns queued JSON
  * responses, allowing tests to assert on payload composition without
  * any network access.
  */
-class FakeStripeHttpClient implements ClientInterface
+class FakeStripeHttpClient implements StripeHttpClientContract
 {
     /** @var array<int, array{method: string, url: string, headers: array, params: array}> */
     public array $requests = [];
