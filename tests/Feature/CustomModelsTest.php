@@ -2,10 +2,8 @@
 
 namespace Lanos\CashierConnect\Tests\Feature;
 
-use Lanos\CashierConnect\Contracts\ConnectCustomerContract;
-use Lanos\CashierConnect\Contracts\ConnectMappingContract;
-use Lanos\CashierConnect\Contracts\ConnectSubscriptionContract;
-use Lanos\CashierConnect\Contracts\ConnectSubscriptionItemContract;
+use Lanos\CashierConnect\CashierConnectServiceProvider;
+use Lanos\CashierConnect\Exceptions\InvalidModelConfigurationException;
 use Lanos\CashierConnect\Models\ConnectCustomer;
 use Lanos\CashierConnect\Models\ConnectMapping;
 use Lanos\CashierConnect\Models\ConnectSubscription;
@@ -26,17 +24,17 @@ use Lanos\CashierConnect\Tests\TestCase;
 class CustomModelsTest extends TestCase
 {
     /**
-     * Config key => [packaged model, contract it must satisfy].
+     * Config key => [packaged model, custom fixture extending it].
      *
-     * @return array<string, array{0: class-string, 1: class-string}>
+     * @return array<string, array{0: string, 1: class-string, 2: class-string}>
      */
     public static function modelConfigProvider(): array
     {
         return [
-            'connect_mapping' => ['connect_mapping', ConnectMapping::class, ConnectMappingContract::class],
-            'connect_customer' => ['connect_customer', ConnectCustomer::class, ConnectCustomerContract::class],
-            'connect_subscription' => ['connect_subscription', ConnectSubscription::class, ConnectSubscriptionContract::class],
-            'connect_subscription_item' => ['connect_subscription_item', ConnectSubscriptionItem::class, ConnectSubscriptionItemContract::class],
+            'connect_mapping' => ['connect_mapping', ConnectMapping::class, CustomConnectMapping::class],
+            'connect_customer' => ['connect_customer', ConnectCustomer::class, CustomConnectCustomer::class],
+            'connect_subscription' => ['connect_subscription', ConnectSubscription::class, CustomConnectSubscription::class],
+            'connect_subscription_item' => ['connect_subscription_item', ConnectSubscriptionItem::class, CustomConnectSubscriptionItem::class],
         ];
     }
 
@@ -51,9 +49,56 @@ class CustomModelsTest extends TestCase
     /**
      * @dataProvider modelConfigProvider
      */
-    public function test_packaged_model_implements_its_contract(string $key, string $model, string $contract): void
+    public function test_validation_accepts_a_model_extending_the_packaged_one(string $key, string $model, string $custom): void
     {
-        $this->assertInstanceOf($contract, new $model);
+        config()->set("cashierconnect.models.{$key}", $custom);
+
+        CashierConnectServiceProvider::validateModels();
+
+        $this->assertTrue(is_subclass_of($custom, $model));
+    }
+
+    /**
+     * @dataProvider modelConfigProvider
+     */
+    public function test_validation_rejects_a_model_not_extending_the_packaged_one(string $key, string $model): void
+    {
+        config()->set("cashierconnect.models.{$key}", User::class);
+
+        $this->expectException(InvalidModelConfigurationException::class);
+        $this->expectExceptionMessage("The model [".User::class."] configured for [cashierconnect.models.{$key}] must extend [{$model}].");
+
+        CashierConnectServiceProvider::validateModels();
+    }
+
+    /**
+     * @dataProvider modelConfigProvider
+     */
+    public function test_validation_rejects_a_missing_model_class(string $key): void
+    {
+        config()->set("cashierconnect.models.{$key}", 'App\\Models\\DoesNotExist');
+
+        $this->expectException(InvalidModelConfigurationException::class);
+        $this->expectExceptionMessage("The model [App\\Models\\DoesNotExist] configured for [cashierconnect.models.{$key}] does not exist.");
+
+        CashierConnectServiceProvider::validateModels();
+    }
+
+    public function test_validation_runs_when_the_package_boots(): void
+    {
+        config()->set('cashierconnect.models.connect_mapping', User::class);
+
+        $this->expectException(InvalidModelConfigurationException::class);
+
+        (new CashierConnectServiceProvider($this->app))->boot();
+    }
+
+    public function test_provider_validates_every_configurable_model(): void
+    {
+        $this->assertEqualsCanonicalizing(
+            array_keys(config('cashierconnect.models')),
+            array_keys(CashierConnectServiceProvider::MODELS)
+        );
     }
 
     public function test_config_only_exposes_the_documented_model_keys(): void
