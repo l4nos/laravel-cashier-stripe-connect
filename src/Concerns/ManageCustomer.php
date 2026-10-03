@@ -5,7 +5,7 @@ namespace Lanos\CashierConnect\Concerns;
 use Illuminate\Database\Eloquent\Model;
 use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
-use Lanos\CashierConnect\Contracts\ConnectMappingContract;
+use Lanos\CashierConnect\Models\ConnectMapping;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
 
@@ -138,7 +138,7 @@ trait ManageCustomer
      * Provides support for UUID based models
      * @return string
      */
-    private function getHostIDField(ConnectMappingContract $connectedAccount){
+    private function getHostIDField(ConnectMapping $connectedAccount){
 
         if($connectedAccount->model_id){
             return 'model_id';

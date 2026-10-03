@@ -3,9 +3,8 @@
 namespace Lanos\CashierConnect\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Lanos\CashierConnect\Contracts\ConnectMappingContract;
 
-class ConnectMapping extends Model implements ConnectMappingContract
+class ConnectMapping extends Model
 {
 
     protected $primaryKey = null;

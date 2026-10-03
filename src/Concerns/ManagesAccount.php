@@ -5,7 +5,7 @@ namespace Lanos\CashierConnect\Concerns;
 
 use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
-use Lanos\CashierConnect\Contracts\ConnectMappingContract;
+use Lanos\CashierConnect\Models\ConnectMapping;
 use Stripe\Account;
 use Stripe\Exception\ApiErrorException;
 
@@ -27,7 +27,7 @@ trait ManagesAccount
 
     /**
      * Updates and returns the updated requirements against the stripe API for the mapping
-     * @return ConnectMappingContract (ConnectMapping)
+     * @return ConnectMapping
      */
     public function updateStripeStatus(){
 

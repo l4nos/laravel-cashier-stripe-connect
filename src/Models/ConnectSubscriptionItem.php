@@ -3,9 +3,8 @@
 namespace Lanos\CashierConnect\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Lanos\CashierConnect\Contracts\ConnectSubscriptionItemContract;
 
-class ConnectSubscriptionItem extends Model implements ConnectSubscriptionItemContract
+class ConnectSubscriptionItem extends Model
 {
 
     protected $guarded = [];

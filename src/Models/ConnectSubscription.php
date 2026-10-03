@@ -4,11 +4,10 @@ namespace Lanos\CashierConnect\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Lanos\CashierConnect\StripeEntity;
-use Lanos\CashierConnect\Contracts\ConnectSubscriptionContract;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Subscription;
 
-class ConnectSubscription extends Model implements ConnectSubscriptionContract
+class ConnectSubscription extends Model
 {
 
     use StripeEntity;
