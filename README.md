@@ -9,6 +9,32 @@ Working on open source packages and helping other developers is my true passion,
 
 ### Documentation has been updated to cover the new features introduced in 1.2.2.
 
+## V1.4.0 Update (Custom Models)
+You can now swap any of the package's internal models for your own through the config. Useful if you need to add your own relationships, casts or override behaviour on the mapping and subscription models:
+
+- New `models` key in the `cashierconnect.php` config covering `connect_mapping`, `connect_customer`, `connect_subscription` and `connect_subscription_item`
+- Custom models must extend the packaged model they replace, otherwise the package will throw a clear error on boot instead of failing somewhere deep in Eloquent
+- Thanks to [@gogl92](https://github.com/gogl92) for this one
+
+Example:
+
+```php
+// config/cashierconnect.php
+'models' => [
+    'connect_mapping' => \App\Models\MyConnectMapping::class,
+],
+```
+
+```php
+// app/Models/MyConnectMapping.php
+class MyConnectMapping extends \Lanos\CashierConnect\Models\ConnectMapping
+{
+    // your own relationships, casts etc
+}
+```
+
+If you published the config before this update you'll need to add the `models` key yourself or republish, otherwise it falls back to the packaged models as normal.
+
 ## V1.3.4 Update (Laravel 13 + Refunds)
 This update brings full Laravel 13 support and adds refund handling for direct charges:
 
