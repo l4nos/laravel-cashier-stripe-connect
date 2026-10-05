@@ -1,6 +1,27 @@
 <?php
 
+use Lanos\CashierConnect\Models\ConnectSubscriptionItem;
+use Lanos\CashierConnect\Models\ConnectMapping;
+use Lanos\CashierConnect\Models\ConnectSubscription;
+use Lanos\CashierConnect\Models\ConnectCustomer;
+
+
 return [
+
+    /**
+     * Eloquent models used by Cashier Connect. You may swap any of these for your
+     * own model, but a custom model MUST extend the packaged model it replaces
+     * (e.g. `class MyMapping extends \Lanos\CashierConnect\Models\ConnectMapping`).
+     * The package relies on the table names, relationships and attributes defined
+     * on the base models, so a class that doesn't extend them will fail at runtime
+     * inside Eloquent rather than with a clear configuration error.
+     */
+    'models' => [
+        'connect_subscription_item' => ConnectSubscriptionItem::class,
+        'connect_subscription' => ConnectSubscription::class,
+        'connect_mapping' => ConnectMapping::class,
+        'connect_customer' => ConnectCustomer::class,
+    ],
 
     'webhook' => [
         'secret' => env('CONNECT_WEBHOOK_SECRET'),

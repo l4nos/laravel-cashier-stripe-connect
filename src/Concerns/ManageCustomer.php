@@ -3,7 +3,6 @@
 namespace Lanos\CashierConnect\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
-use Lanos\CashierConnect\Models\ConnectCustomer;
 use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
 use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
 use Lanos\CashierConnect\Models\ConnectMapping;
@@ -18,7 +17,7 @@ trait ManageCustomer
      */
     public function stripeCustomerMapping()
     {
-        return $this->belongsTo(ConnectCustomer::class, $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
+        return $this->belongsTo(config('cashierconnect.models.connect_customer'), $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
     }
 
     /**
@@ -89,7 +88,7 @@ trait ManageCustomer
      */
     private function retrieveHostConnectedAccount(): Model{
 
-        $connectedAccount = ConnectMapping::where([
+        $connectedAccount = config('cashierconnect.models.connect_mapping')::where([
             ['stripe_account_id', '=', $this->stripeAccountId()]
         ])->first();
 

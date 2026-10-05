@@ -21,6 +21,6 @@ class ConnectSubscriptionItem extends Model
 
     public function subscription()
     {
-        return $this->belongsTo(ConnectSubscription::class, 'connected_subscription_id', 'id');
+        return $this->belongsTo(config('cashierconnect.models.connect_subscription'), 'connected_subscription_id', 'id');
     }
 }

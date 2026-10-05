@@ -22,7 +22,7 @@ class ConnectMapping extends Model
     protected $table = 'stripe_connect_mappings';
 
     public function subscriptions(){
-        return $this->hasMany(ConnectSubscription::class, 'stripe_account_id', 'stripe_account_id');
+        return $this->hasMany(config('cashierconnect.models.connect_subscription'), 'stripe_account_id', 'stripe_account_id');
     }
 
 }
